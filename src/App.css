@@ -7,6 +7,28 @@ h1 {
 	margin-bottom: 0px;
 }
 
-body {
-	background-image: url(banfiellld.jpeg);
+header{
+	z-index: 999;
 }
+
+/* Establecer la imagen de fondo para el elemento body */
+.background{
+	background-image: url(banfiellld.jpeg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	
+  }
+  
+  /* Aplicar un filtro de desenfoque y un filtro de brillo a la imagen de fondo */
+  .background::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 105%;
+	height: 105%;
+	background: inherit;
+	filter: blur(5px) brightness(0.8);
+	z-index: -1;
+  }

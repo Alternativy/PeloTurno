@@ -6,6 +6,9 @@ function App() {
       <header>
         <h1>PeloTurno</h1>
         </header>
+        <div className="background">
+          
+        </div>
     </div>
   );
 }
