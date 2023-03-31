@@ -3,8 +3,7 @@ h1 {
 	color: white;
 	margin: 0px;
 	padding-left: 30px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
+
 }
 
 header{
@@ -17,11 +16,12 @@ header{
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
-	
+	display: flex;
+
 }
 
 /* Aplicar un filtro de desenfoque y un filtro de brillo a la imagen de fondo */
-.background::before {
+/* .background::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -32,14 +32,17 @@ header{
 	filter: blur(2px) brightness(0.8);
 	-webkit-filter: blur(2px);
 	z-index: -1;
-  }
+  } */
   
+  /*
   main{
 	  background-color: rgba(255, 238, 0, 0.6);
 	backdrop-filter: blur(6px);
 	padding: 2%;
 	box-shadow: solid 0px 0px 12px;
 }
+*/
+
 
 .container{
 	background-color: rgba(255, 238, 0, 0.6);

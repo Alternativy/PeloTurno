@@ -3,14 +3,12 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1 className='p-3'>PeloTurno</h1>
+        <h1 className='p-3 m-0'>PeloTurno</h1>
         </header>
-        {/* <main>
-          <h3>Los Salchipapas</h3>
-          </main> */}
+
         <div className="background">
-          <div className='container border border-1 rounded p-5 mt-5 '>
-            <div className='formulario m-auto'>
+          <div className='container border border-1 rounded p-5 p-relative mt-5'>
+            <form className='formulario m-auto'>
 
             <label className='dark h4 text-start'>Lugar</label>
             <br></br>
@@ -45,11 +43,16 @@ function App() {
             <br></br>
             
           <button type='submit' className='btn btn-light border border-3 border-dark btn-lg m-auto ms-4 bold px-5'> Armar doparti</button>
-            </div>
+            </form>
 
             </div>
           
         </div>
+
+
+
+
+
     </div>
   );
 }
