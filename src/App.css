@@ -43,6 +43,7 @@ header{
 
 .container{
 	background-color: rgba(255, 238, 0, 0.6);
+	max-width: 550px !important;
 }
 
 .form-check-input[type=checkbox] {
@@ -50,3 +51,6 @@ header{
 	height: 2em;
   }
 
+.formulario{
+	max-width: 300px;
+}
