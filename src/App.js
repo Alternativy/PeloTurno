@@ -16,11 +16,11 @@ function App() {
             <br/>
             <label className='dark h4' for='fecha'>Fecha:</label>
             <br/>
-            <input type='date' id='fecha' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='date' id='fecha' placeholder='Escribir aquí' name='fecha' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
             <label className='dark h4' for='hora'>Hora:</label>
             <br/>
-            <input type='time' id='hora' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='time' id='hora' name='hora' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
             <label className='dark h4'>Cantidad de jugadores:</label>
 
@@ -57,17 +57,17 @@ function App() {
 
             <label className='dark h4' for='precio'>Precio:</label>
             <br/>
-            <input type='number' id='precio' placeholder='$' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='number' id='precio' name='precio' placeholder='$' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
             <label className='dark h4 text-start' for='equipo1'>Nombre Equipo 1:</label>
             <br/>
-            <input type='text' id='equipo1' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='text' id='equipo1' name='equipo1' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
             <label className='dark h4 text-start' for='equipo2'>Nombre Equipo 2:</label>
             <br/>
-            <input type='text' id='equipo2' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='text' id='equipo2' name='equipo2' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <input type='checkbox' id='alquilado' className='bg-dark mb-5 form-check-input'/>&nbsp; &nbsp;
+            <input type='checkbox' id='alquilado' name='alquilado' className='bg-dark mb-5 form-check-input'/>&nbsp; &nbsp;
             <label className='dark h4 pt-1' for='alquilado'>Alquilado</label> 
             <br/>
             <div className='text-center mt-3'>
