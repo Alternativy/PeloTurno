@@ -10,65 +10,65 @@ function App() {
           <div className='container border border-1 rounded p-5 p-relative '>
             <form className='formulario m-auto '>
 
-            <label className='dark h4 text-start'>Lugar:</label>
+            <label className='dark h4 text-start' for='lugar'>Lugar:</label>
             <br/>
-            <input type='text' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='text' id='lugar' placeholder='Escribir aquí' name='lugar' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4'>Fecha:</label>
+            <label className='dark h4' for='fecha'>Fecha:</label>
             <br/>
-            <input type='date' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='date' id='fecha' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4'>Hora:</label>
+            <label className='dark h4' for='hora'>Hora:</label>
             <br/>
-            <input type='time' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='time' id='hora' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
             <label className='dark h4'>Cantidad de jugadores:</label>
 
             <div className='row'>
               <div className='col-2'>
-                <label className='dark h4'>10</label>
+                <label className='dark h4' for='10jugadores'>10</label>
               </div>
               <div className='col-2'>
-                <label className='dark h4'>14</label>              
+                <label className='dark h4' for='14jugadores'>14</label>              
               </div>
               <div className='col-2'>
-                <label className='dark h4'>18</label>
+                <label className='dark h4' for='18jugadores'>18</label>
               </div>
               <div className='col-2'>
-                <label className='dark h4'>22</label>
+                <label className='dark h4' for='22jugadores'>22</label>
               </div>
             </div>
             <div className='row mb-2'>
               &nbsp;
               <div className='col-2'>
-              <input type="radio" value="10" name="cantidadJugadores" /> 
+              <input type="radio" className='form-check-input' id='10jugadores' value="10" name="cantidadJugadores" /> 
               </div>
               <div className='col-2'>
-              <input type="radio" value="14" name="cantidadJugadores" /> 
+              <input type="radio" className='form-check-input' id='14jugadores' value="14" name="cantidadJugadores" /> 
               </div>
               <div className='col-2'>
-              <input type="radio" value="18" name="cantidadJugadores" /> 
+              <input type="radio" className='form-check-input' id='18jugadores' value="18" name="cantidadJugadores" /> 
               </div>
               <div className='col-2'>
-              <input type="radio" value="2" name="cantidadJugadores" /> 
+              <input type="radio" className='form-check-input' id='22jugadores' value="22" name="cantidadJugadores" /> 
               </div>
             </div>
 
 
-            <label className='dark h4'>Precio:</label>
+            <label className='dark h4' for='precio'>Precio:</label>
             <br/>
-            <input type='number' placeholder='$' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='number' id='precio' placeholder='$' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4 text-start'>Nombre Equipo 1:</label>
+            <label className='dark h4 text-start' for='equipo1'>Nombre Equipo 1:</label>
             <br/>
-            <input type='text' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
+            <input type='text' id='equipo1' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4 text-start'>Nombre Equipo 2:</label>
+            <label className='dark h4 text-start' for='equipo2'>Nombre Equipo 2:</label>
             <br/>
-            <input type='text' placeholder='Escribir aquí' className='form-control-lg bg-dark mb-3'/>
+            <input type='text' id='equipo2' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <input type='checkbox' className='bg-dark mb-5 form-check-input'/>&nbsp; &nbsp;
-            <label className='dark h4 pt-1'>Alquilado</label> 
+            <input type='checkbox' id='alquilado' className='bg-dark mb-5 form-check-input'/>&nbsp; &nbsp;
+            <label className='dark h4 pt-1' for='alquilado'>Alquilado</label> 
             <br/>
             <div className='text-center mt-3'>
               <button type='submit' className='btn btn-light border border-3 border-dark btn-lg bold px-5'> Armar doparti</button>
