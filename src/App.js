@@ -1,5 +1,15 @@
+import React, { Component } from 'react';
 import './App.css';
+import { FirebaseApp } from 'firebase/app';
+import FirebaseAnalytics from 'firebase/analytics';
+import FirebaseDatabase from 'firebase/database';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import firebaseConfig from './firebaseConfig';
+
+
 function App() {
+  
   return (
     <div className="App">
       <header>
@@ -10,15 +20,15 @@ function App() {
           <div className='container border border-1 rounded p-5 p-relative '>
             <form className='formulario m-auto '>
 
-            <label className='dark h4 text-start' for='lugar'>Lugar:</label>
+            <label className='dark h4 text-start' htmlFor='lugar'>Lugar:</label>
             <br/>
             <input type='text' id='lugar' placeholder='Escribir aquí' name='lugar' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4' for='fecha'>Fecha:</label>
+            <label className='dark h4' htmlFor='fecha'>Fecha:</label>
             <br/>
             <input type='date' id='fecha' placeholder='Escribir aquí' name='fecha' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4' for='hora'>Hora:</label>
+            <label className='dark h4' htmlFor='hora'>Hora:</label>
             <br/>
             <input type='time' id='hora' name='hora' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
@@ -26,16 +36,16 @@ function App() {
 
             <div className='row'>
               <div className='col-2'>
-                <label className='dark h4' for='10jugadores'>10</label>
+                <label className='dark h4' htmlFor='10jugadores'>10</label>
               </div>
               <div className='col-2'>
-                <label className='dark h4' for='14jugadores'>14</label>              
+                <label className='dark h4' htmlFor='14jugadores'>14</label>              
               </div>
               <div className='col-2'>
-                <label className='dark h4' for='18jugadores'>18</label>
+                <label className='dark h4' htmlFor='18jugadores'>18</label>
               </div>
               <div className='col-2'>
-                <label className='dark h4' for='22jugadores'>22</label>
+                <label className='dark h4' htmlFor='22jugadores'>22</label>
               </div>
             </div>
             <div className='row mb-2'>
@@ -55,20 +65,20 @@ function App() {
             </div>
 
 
-            <label className='dark h4' for='precio'>Precio:</label>
+            <label className='dark h4' htmlFor='precio'>Precio:</label>
             <br/>
             <input type='number' id='precio' name='precio' placeholder='$' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4 text-start' for='equipo1'>Nombre Equipo 1:</label>
+            <label className='dark h4 text-start' htmlFor='equipo1'>Nombre Equipo 1:</label>
             <br/>
             <input type='text' id='equipo1' name='equipo1' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
-            <label className='dark h4 text-start' for='equipo2'>Nombre Equipo 2:</label>
+            <label className='dark h4 text-start' htmlFor='equipo2'>Nombre Equipo 2:</label>
             <br/>
             <input type='text' id='equipo2' name='equipo2' placeholder='Escribir aquí' className='form-control-lg bg-dark text-light mb-3'/>
             <br/>
             <input type='checkbox' id='alquilado' name='alquilado' className='bg-dark mb-5 form-check-input'/>&nbsp; &nbsp;
-            <label className='dark h4 pt-1' for='alquilado'>Alquilado</label> 
+            <label className='dark h4 pt-1' htmlFor='alquilado'>Alquilado</label> 
             <br/>
             <div className='text-center mt-3'>
               <button type='submit' className='btn btn-light border border-3 border-dark btn-lg bold px-5'> Armar doparti</button>
