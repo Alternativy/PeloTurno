@@ -3,7 +3,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1 className='p-3 m-0'>PeloTurno</h1>
+        <h1 className='p-3 m-0'>PeloTurnos</h1>
       </header>
 
         <div className="background">
