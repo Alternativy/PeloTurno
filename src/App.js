@@ -1,38 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect  } from 'react';
 import './App.css';
 import firebaseConfig from './firebaseConfig';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDatabase } from "firebase/database";
-import { ref } from "firebase/database";
-import { onValue } from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const dbRef = ref(database, "partido"); 
 
-// GET DATA FROM DATABASE
-onValue(dbRef, (snapshot) => {
-  const data = snapshot.val();
-  console.log(data);
-});
-
-
 
 
 function App() {
+
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+
+    onValue(dbRef, (snapshot) => {
+      setData(snapshot.val().sonzo);
+      console.log(snapshot.val().sonzo);
+    });
+  }, []);
   
   return (
     <div className="App">
       <header>
-        <h1 className='p-3 m-0'>PeloTurno</h1>
+        <h1 className='p-3 m-0'>PeloTurno
+          <div className='border p-4 bg-light mb-4 text-dark'>
+              <h2>Esto viene desde la realtime DB: {data}</h2>
+          </div>
+        </h1>
       </header>
+
 
         <div className="background">
           <div className='container border border-1 rounded p-5 p-relative '>
+
+
+
             <form className='formulario m-auto '>
 
             <label className='dark h4 text-start' htmlFor='lugar'>Lugar:</label>
