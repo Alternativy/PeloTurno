@@ -6,31 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDEF_4GI_pTIH8u6fFCbdB1vrcYXDdl9bs",
-  authDomain: "peloturno-e8bc6.firebaseapp.com",
-  databaseURL: "https://peloturno-e8bc6-default-rtdb.firebaseio.com",
-  projectId: "peloturno-e8bc6",
-  storageBucket: "peloturno-e8bc6.appspot.com",
-  messagingSenderId: "730962796057",
-  appId: "1:730962796057:web:7b0e73a9f4e5d1cfc1d488",
-  measurementId: "G-GGGEM7R8J6"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-
-
 
 // Main app
 const root = ReactDOM.createRoot(document.getElementById('root'));

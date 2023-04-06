@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import { FirebaseApp } from 'firebase/app';
-import FirebaseAnalytics from 'firebase/analytics';
-import FirebaseDatabase from 'firebase/database';
-import firebase from 'firebase/app';
-import 'firebase/database';
 import firebaseConfig from './firebaseConfig';
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase } from "firebase/database";
+import { ref } from "firebase/database";
+import { onValue } from "firebase/database";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const dbRef = ref(database, "partido"); 
+
+// GET DATA FROM DATABASE
+onValue(dbRef, (snapshot) => {
+  const data = snapshot.val();
+  console.log(data);
+});
+
+
 
 
 function App() {
@@ -13,7 +28,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1 className='p-3 m-0'>PeloTurnos</h1>
+        <h1 className='p-3 m-0'>PeloTurno</h1>
       </header>
 
         <div className="background">
