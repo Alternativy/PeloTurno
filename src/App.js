@@ -29,9 +29,6 @@ function App() {
     <div className="App">
       <header>
         <h1 className='p-3 m-0'>PeloTurno
-          <div className='border p-4 bg-light mb-4 text-dark'>
-              <h2>Esto viene desde la realtime DB: {data}</h2>
-          </div>
         </h1>
       </header>
 
@@ -113,6 +110,9 @@ function App() {
         </div>
 
 
+          <div className='border p-4 bg-light mb-4 text-dark'>
+              <h2>Realtime DB: {data}</h2>
+          </div>
 
 
 
