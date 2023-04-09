@@ -1,10 +1,10 @@
 import React, { Component, useState, useEffect  } from 'react';
 import './App.css';
 import firebaseConfig from './firebaseConfig';
-
+import {uid} from 'uid';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, set} from "firebase/database";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -12,33 +12,45 @@ const database = getDatabase(app);
 const dbRef = ref(database, "partido"); 
 
 
-
 function App() {
 
+  /*
   const [data, setData] = useState("");
-
   useEffect(() => {
-
     onValue(dbRef, (snapshot) => {
-      setData(snapshot.val().sonzo);
-      console.log(snapshot.val().sonzo);
+      setData(snapshot.val());
+      console.log(snapshot.val());
     });
   }, []);
+*/
+
+const writeToDatabase = (event) => {
+    event.preventDefault();
+    const uuid = uid();
+    set(ref(database, `partido/${uuid}`), {
+        uuid : uuid,
+        lugar: event.target[0].value,
+        fecha: event.target[1].value,
+        hora: event.target[2].value,
+        cantidadJugadores: event.target[3].value,
+        precio: event.target[7].value,
+        equipo1: event.target[8].value,
+        equipo2: event.target[9].value,
+        alquilado: event.target[10].checked,
+    });
+}
   
   return (
     <div className="App">
       <header>
-        <h1 className='p-3 m-0'>PeloTurno
+        <h1 className='p-3 m-0'> PeloTurno
         </h1>
       </header>
-
 
         <div className="background">
           <div className='container border border-1 rounded p-5 p-relative '>
 
-
-
-            <form className='formulario m-auto '>
+            <form className='formulario m-auto' onSubmit={writeToDatabase}>
 
             <label className='dark h4 text-start' htmlFor='lugar'>Lugar:</label>
             <br/>
@@ -109,10 +121,6 @@ function App() {
           
         </div>
 
-
-          <div className='border p-4 bg-light mb-4 text-dark'>
-              <h2>Realtime DB: {data}</h2>
-          </div>
 
 
 
