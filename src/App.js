@@ -1,15 +1,13 @@
-import React, { Component, useState, useEffect  } from 'react';
+import React from 'react';
 import './App.css';
 import firebaseConfig from './firebaseConfig';
 import {uid} from 'uid';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set} from "firebase/database";
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const dbRef = ref(database, "partido"); 
 
 
 function App() {
@@ -32,11 +30,11 @@ const writeToDatabase = (event) => {
         lugar: event.target[0].value,
         fecha: event.target[1].value,
         hora: event.target[2].value,
-        cantidadJugadores: event.target[3].value,
-        precio: event.target[7].value,
-        equipo1: event.target[8].value,
-        equipo2: event.target[9].value,
-        alquilado: event.target[10].checked,
+        cantidadJugadores: document.querySelector('input[name="cantidadJugadores"]:checked').value,
+        precio: event.target[8].value,
+        equipo1: event.target[9].value,
+        equipo2: event.target[10].value,
+        alquilado: event.target[11].checked,
     });
 }
   
@@ -71,6 +69,9 @@ const writeToDatabase = (event) => {
                 <label className='dark h4' htmlFor='10jugadores'>10</label>
               </div>
               <div className='col-2'>
+                <label className='dark h4' htmlFor='12jugadores'>12</label>              
+              </div>
+              <div className='col-2'>
                 <label className='dark h4' htmlFor='14jugadores'>14</label>              
               </div>
               <div className='col-2'>
@@ -84,6 +85,9 @@ const writeToDatabase = (event) => {
               &nbsp;
               <div className='col-2'>
               <input type="radio" className='form-check-input' id='10jugadores' value="10" name="cantidadJugadores" /> 
+              </div>
+              <div className='col-2'>
+              <input type="radio" className='form-check-input' id='12jugadores' value="12" name="cantidadJugadores" /> 
               </div>
               <div className='col-2'>
               <input type="radio" className='form-check-input' id='14jugadores' value="14" name="cantidadJugadores" /> 
