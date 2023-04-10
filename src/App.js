@@ -1,14 +1,20 @@
 import React from 'react';
 import './App.css';
+import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
 import firebaseConfig from './firebaseConfig';
-import {uid} from 'uid';
+import { uid } from 'uid';
+import CrearPartido from './CrearPartido.';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set} from "firebase/database";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+
+function HomePage() {
+  return <h1>¡Bienvenido a la página de inicio!</h1>;
+}
 
 function App() {
 
@@ -125,7 +131,24 @@ const writeToDatabase = (event) => {
           
         </div>
 
+        <Router>
+      		<div>
+        		<nav>
+          			<ul>
+            			<li>
+              				<Link to="/home">Home</Link>
+            			</li>
+            			<li>
+              				<Link to="/contact">Contact</Link>
+            			</li>
+          			</ul>
+        		</nav>
 
+        		<Routes>
+          			<Route path="/home" element={<CrearPartido/>} />
+        		</Routes>
+      		</div>
+    	</Router>
 
 
     </div>
