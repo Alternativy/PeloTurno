@@ -1,0 +1,44 @@
+{
+    "partido": {
+        "795a46b63c6":{
+            "id": "795a46b63c6",
+            "nombre": "Partido de fulboooo",
+            "fecha": "2021-05-01T00:00:00.000Z",
+            "hora": "2021-05-01T00:00:00.000Z",
+            "precio": 2500,
+            "alquilado": false,
+            "usuarios": [
+                {"user_id": "1001", "username": "usuario1", "color": "red", "is_admin": true, "positionX": 0, "positionY": 0},
+                {"user_id": "1002", "username": "usuario2", "color": "blue", "positionX": 0, "positionY": 0},
+                {"user_id": "1003", "username": "usuario3", "color": "yellow", "positionX": 0, "positionY": 0},
+                {"user_id": "1004", "username": "usuario4", "color": "green", "positionX": 0, "positionY": 0},
+                {"user_id": "1005", "username": "usuario5", "color": "black","positionX": 0, "positionY": 0}
+            ],
+            "equipo_1": ["1001", "1002", "1003"],
+            "equipo_2": ["1004", "1005", "1006"],
+            "chat_box": [
+                {
+                  "message_id": "1",
+                  "sender_id": "1001",
+                  "sender_username": "usuario1",
+                  "timestamp": "2023-04-11T12:30:00Z",
+                  "text": "Hola a todos"
+                },
+                {
+                  "message_id": "2",
+                  "sender_id": "1002",
+                  "sender_username": "usuario2",
+                  "timestamp": "2023-04-11T12:35:00Z",
+                  "text": "Hola usuario1"
+                },
+                {
+                  "message_id": "3",
+                  "sender_id": "1003",
+                  "sender_username": "usuario3",
+                  "timestamp": "2023-04-11T12:40:00Z",
+                  "text": "¿Cómo están todos?"
+                }
+            ]
+        }
+    }
+}
