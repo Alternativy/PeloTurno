@@ -85,7 +85,7 @@ function FormularioPartido() {
               <div className='row mb-2'>
                 &nbsp;
                 <div className='col-2'>
-                <input type="radio" className='form-check-input' id='10jugadores' value="10" name="cantidadJugadores" /> 
+                <input type="radio" className='form-check-input' id='10jugadores' value="10" name="cantidadJugadores" checked /> 
                 </div>
                 <div className='col-2'>
                 <input type="radio" className='form-check-input' id='12jugadores' value="12" name="cantidadJugadores" /> 
