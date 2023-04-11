@@ -148,7 +148,7 @@ const writeToDatabase = (event) => {
           			<Route path="/home" element={<CrearPartido/>} />
         		</Routes>
       		</div>
-    	</Router>
+    	    </Router>
 
 
     </div>
