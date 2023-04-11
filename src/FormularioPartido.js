@@ -2,10 +2,12 @@ import React from 'react';
 import './App.css';
 import firebaseConfig from './firebaseConfig';
 import { uid } from 'uid';
+import Cookies from 'js-cookie';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set } from "firebase/database";
+import "firebase/auth";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -22,12 +24,18 @@ function FormularioPartido() {
       });
     }, []);
   */
+
+    function getCookies() {
+        const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+        return cookies;
+      }
   
   const writeToDatabase = (event) => {
       event.preventDefault();
-      const uuid = uid();
-      set(ref(database, `partido/${uuid}`), {
-          uuid : uuid,
+      const id = uid(8);
+      const user_id = uid(8);
+      set(ref(database, `partido/${id}`), {
+          id : id,
           lugar: event.target[0].value,
           fecha: event.target[1].value,
           hora: event.target[2].value,
@@ -36,7 +44,15 @@ function FormularioPartido() {
           equipo1: event.target[9].value,
           equipo2: event.target[10].value,
           alquilado: event.target[11].checked,
+          usuarios: [{"user_id": user_id, "username": event.target[0].value, "color": "red", "is_admin": true, "positionX": 0, "positionY": 0}],
       });
+
+      Cookies.set('partido_' + id, 'uid_' + user_id, { expires: 60 });
+
+      // obtener todas las cookies
+      // si coincide alguna de las cookies, con el partido actual, obtener el valor del usuario id. y chekear si es admin.
+      const cookies = getCookies();
+      console.log(cookies);
   }
     
     return (
@@ -85,7 +101,7 @@ function FormularioPartido() {
               <div className='row mb-2'>
                 &nbsp;
                 <div className='col-2'>
-                <input type="radio" className='form-check-input' id='10jugadores' value="10" name="cantidadJugadores" checked /> 
+                <input type="radio" className='form-check-input' id='10jugadores' value="10" name="cantidadJugadores" defaultChecked /> 
                 </div>
                 <div className='col-2'>
                 <input type="radio" className='form-check-input' id='12jugadores' value="12" name="cantidadJugadores" /> 
