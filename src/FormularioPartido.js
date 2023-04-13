@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 import "firebase/auth";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -15,15 +15,6 @@ const database = getDatabase(app);
 
 function FormularioPartido() {
   
-    /*
-    const [data, setData] = useState("");
-    useEffect(() => {
-      onValue(dbRef, (snapshot) => {
-        setData(snapshot.val());
-        console.log(snapshot.val());
-      });
-    }, []);
-  */
 
     function getCookies() {
         const cookies = document.cookie.split(';').map(cookie => cookie.trim());

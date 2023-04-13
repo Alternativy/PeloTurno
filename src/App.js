@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Link, Routes, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
 import CrearPartido from './CrearPartido';
-import FormularioPartido from './FormularioPartido';
 import PartidoComponent from './PartidoComponent';
 
 
@@ -24,7 +23,9 @@ function App() {
           			</ul>
         		</nav>
 
+
         		<Routes>
+		  			<Route path="/" element={<CrearPartido/>} />
 					  <Route path="/:id" element={<PartidoComponent/>} />
         		</Routes>
       		</div>
