@@ -18,15 +18,24 @@ const writeToDatabase = (event) => {
     set(ref(database, `partido/${id}`), {
         id : id,
         url: "http://localhost:3000/" + id,
-        lugar: "",
-        fecha: "",
-        hora: "",
+        lugar: "mi lugar",
+        fecha: "una fecha",
+        hora: "una hora",
         cantidadJugadores: "",
-        precio: "",
+        precio: "1500",
         equipo1: "",
         equipo2: "",
         alquilado: false,
-        usuarios: [{"user_id": user_id, "username": event.target[0].value, "color": "red", "is_admin": true, "positionX": 0, "positionY": 0}],
+        usuarios: {
+            [user_id]: {
+              "user_id": user_id,
+              "username": event.target[0].value,
+              "color": "red",
+              "is_admin": true,
+              "positionX": 0,
+              "positionY": 0
+            }
+          }
     }).then(() => {
         console.log('Los datos se han escrito correctamente');
         const partidoRef = ref(database, `partido/${id}`);

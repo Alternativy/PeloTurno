@@ -12,29 +12,43 @@ import "firebase/auth";
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+
 function PartidoComponent() {
 
     // obtener :id desde la url
     const { id } = useParams();
-    // obtener datos del partido
-    const [data, setData] = useState({});
+    const dbRef = ref(database, "partido/" + id); 
+    const [data, setData] = useState("");
+    
 
     useEffect(() => {
-      const dbRef = ref(database);
+  
       onValue(dbRef, (snapshot) => {
-        const partidoRef = ref(database, `partido/${id}`);
-        get(partidoRef).then((snapshot) => {
-            const partido = snapshot.val();
-            console.log(partido);
-        }).catch((error) => {
-            console.error('Error al obtener los datos del partido: ', error);
-        });
+        setData(snapshot.val());
+        console.log(snapshot.val());
       });
     }, []);
 
     return (
     <div>
       <p>La id es: {id} </p>
+      <span>Id: {data.id}</span>
+      <br/>
+      <span>Lugar: {data.lugar}</span>
+      <br/>
+      <span>Hora: {data.hora}</span>
+      <br/>
+      <span>Fecha: {data.fecha}</span>
+      <br/>
+      <span>Precio: {data.precio}</span>
+      <br/>
+      <span>Usuarios: </span>
+      <ul>
+      {data.usuarios && Object.keys(data.usuarios).map(function(key) {
+        const usuario = data.usuarios[key];
+        return <li key={usuario.user_id}>{usuario.username}</li>;
+      })}
+    </ul>
     </div>
 
     );
