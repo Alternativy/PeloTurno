@@ -42,14 +42,26 @@ function PartidoComponent() {
       });
     }, []);
 
+    // obtener datos del usuario a partir de la cookie
     function get_user(){
-      for (let i = 0; i < data.usuarios.length; i++) {
-        if (data.usuarios[i].user_id === cookie.value) {
-          return data.usuarios[i].is_admin;
+      for (const userId in data.usuarios) {
+        const user = data.usuarios[userId];
+        // si el id de usuario en la db coincide con el valor de la cookie
+        if (cookie && user.user_id === cookie.value) {
+          console.log(user.color);
+          if (user.is_admin) {
+            console.log('es admin: ' + user.is_admin);
+          }
+        }
+        // si no coincide el valor de la cookie
+        else{
+          console.log('el usuario no existe, mostrar input de ingrese su nombre..');
         }
       }
       return false;
     }
+
+    get_user();
 
     return (
     <div>
