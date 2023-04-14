@@ -12,6 +12,18 @@ import "firebase/auth";
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+function getCookies() {
+  const { id } = useParams();
+  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+  for (let i = 0; i < cookies.length; i++) {
+    if (cookies[i].includes(id)) {
+      const [name, value] = cookies[i].split('=');
+      return { name, value };
+    }
+  }
+  return null;
+}
+
 
 function PartidoComponent() {
 
@@ -19,7 +31,8 @@ function PartidoComponent() {
     const { id } = useParams();
     const dbRef = ref(database, "partido/" + id); 
     const [data, setData] = useState("");
-    
+    const cookie = getCookies();
+    console.log(cookie);
 
     useEffect(() => {
   
@@ -29,10 +42,19 @@ function PartidoComponent() {
       });
     }, []);
 
+    function get_user(){
+      for (let i = 0; i < data.usuarios.length; i++) {
+        if (data.usuarios[i].user_id === cookie.value) {
+          return data.usuarios[i].is_admin;
+        }
+      }
+      return false;
+    }
+
     return (
     <div>
-      <p>La id es: {id} </p>
-      <span>Id: {data.id}</span>
+
+      <span>Id del partido: {data.id}</span>
       <br/>
       <span>Lugar: {data.lugar}</span>
       <br/>
@@ -46,9 +68,10 @@ function PartidoComponent() {
       <ul>
       {data.usuarios && Object.keys(data.usuarios).map(function(key) {
         const usuario = data.usuarios[key];
-        return <li key={usuario.user_id}>{usuario.username}</li>;
+        return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id}</li>;
       })}
     </ul>
+      
     </div>
 
     );

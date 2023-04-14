@@ -1,6 +1,7 @@
 import React from "react";
 import firebaseConfig from './firebaseConfig';
 import { uid } from 'uid';
+import Cookies from 'js-cookie';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -9,6 +10,7 @@ import "firebase/auth";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+
 
 const writeToDatabase = (event) => {
     event.preventDefault();
@@ -42,7 +44,9 @@ const writeToDatabase = (event) => {
         get(partidoRef).then((snapshot) => {
             const partido = snapshot.val();
             console.log('Partido creado correctamente: ', partido);
-            console.log(partido.id);
+            // crear cookie con id del  partido y usuario
+            Cookies.set(id, user_id, { expires: 60 });
+            // redirigir al PartidoComponent
             window.location.replace(partido.url);
         }).catch((error) => {
             console.error('Error al obtener los datos del partido: ', error);
