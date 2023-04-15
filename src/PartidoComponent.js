@@ -61,32 +61,37 @@ function PartidoComponent() {
       return false;
     }
 
-    get_user();
+    // si existe data con el id de la url
+    if (data != null){
 
-    return (
-    <div>
+      get_user();
 
-      <span>Id del partido: {data.id}</span>
-      <br/>
-      <span>Lugar: {data.lugar}</span>
-      <br/>
-      <span>Hora: {data.hora}</span>
-      <br/>
-      <span>Fecha: {data.fecha}</span>
-      <br/>
-      <span>Precio: {data.precio}</span>
-      <br/>
-      <span>Usuarios: </span>
-      <ul>
-      {data.usuarios && Object.keys(data.usuarios).map(function(key) {
-        const usuario = data.usuarios[key];
-        return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id}</li>;
-      })}
-    </ul>
-      
-    </div>
+      return (
+      <div>
+  
+        <span>Id del partido: {data.id}</span>
+        <br/>
+        <span>Lugar: {data.lugar}</span>
+        <br/>
+        <span>Hora: {data.hora}</span>
+        <br/>
+        <span>Fecha: {data.fecha}</span>
+        <br/>
+        <span>Precio: {data.precio}</span>
+        <br/>
+        <span>Usuarios: </span>
+        <ul>
+        {data.usuarios && Object.keys(data.usuarios).map(function(key) {
+          const usuario = data.usuarios[key];
+          return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id}</li>;
+        })}
+      </ul>
+        
+      </div>
+  
+      );
+    }
 
-    );
 }
 
 export default PartidoComponent;
