@@ -61,14 +61,14 @@ function CrearPartido() {
     return (
         <div className="CrearPartido">
 
-        <form className='formulario m-auto' onSubmit={writeToDatabase}>
+        <form className='formulario m-auto text-center' onSubmit={writeToDatabase}>
         
-        <label className='h4 text-start' htmlFor='lugar'>Tu nombre:</label>
+        <label className='h4 text-start' htmlFor='username'>Tu nombre:</label>
         <br/>
-        <input type='text' id='lugar' placeholder='Escribir aquí' name='lugar' className='form-control-lg mb-3'/>
+        <input type='text' id='username' placeholder='Escribir aquí' name='username' className='form-control-lg mb-3'/>
 
         <div className='mt-3 text-center'>
-            <button type='submit' className='btn btn-primary border border-3 border-dark btn-lg bold px-5'> Crear un Partido</button>
+            <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'> Crear un Partido</button>
         </div>
 
         </form>
