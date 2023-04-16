@@ -12,28 +12,23 @@ function App() {
     <div className="App">
 
         <Router>
-      		<div>
-
-
-			<div className='container rounded p-5' style={{backgroundColor: 'rgba(25,25,25,0.2)'}}>
-
-				<CrearPartido/>
-				<br/>
-				<br/>
-				<div className='border border-2'></div>
-				<br/>
-				<br/>
-				<UnirsePartido/>
-			</div>
-
-
         		<Routes>
+					<Route path="/" element={
+						<div className='container rounded p-5' style={{backgroundColor: 'rgba(25,25,25,0.2)'}}>
+							<CrearPartido/>
+							<br/>
+							<br/>
+							<div className='border border-2'></div>
+							<br/>
+							<br/>
+							<UnirsePartido/>
+						</div>
+					} />
+
 					<Route path="/:id" element={<PartidoComponent/>} />
+
         		</Routes>
-
-      		</div>
     	  </Router>
-
 
     </div>
   );

@@ -68,8 +68,10 @@ function UnirsePartido(){
 
         </form>
 
+
         </div>
     )
 }
+
 
 export default UnirsePartido;
