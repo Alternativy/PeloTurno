@@ -84,7 +84,7 @@ const unirsePartido = (event) => {
                             // crear cookie con id del  partido y usuario
                             Cookies.set(id, user_id, { expires: 60 });
                             // redirigir al PartidoComponent
-                            //window.location.replace(partido.url);
+                            window.location.replace(partido.url);
                         }).catch((error) => {
                             console.error('Error al obtener los datos del partido: ', error);
                         });

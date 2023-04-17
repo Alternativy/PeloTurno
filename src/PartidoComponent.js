@@ -41,7 +41,7 @@ function PartidoComponent() {
         }
       });
     }, []);
-    
+
 
     // obtener datos del usuario a partir de la cookie
     function get_user(){
@@ -60,22 +60,20 @@ function PartidoComponent() {
                     console.log('es admin: ' + user.is_admin);
                 }
                 hasUserCookies = true;   
-                return;
+                return true;
             }
             else{
                 hasUserCookies = false;
             }
         }
         if (!hasUserCookies) {
-          console.log(data_get);
           console.log('no tienes cookies... modal-box ingrese su nombre');
-          return 'no_cookies';
         }
 
         }
         else {
           console.log('No existe el partido, ID incorrecta');
-
+          window.location.replace('http://localhost:3000');
         }
 
       }).catch((error) => {
@@ -85,11 +83,10 @@ function PartidoComponent() {
 
     // si existe data con el id de la url
     if (data !== null && data !== ""){
-      const user_data = get_user();
+      get_user();
 
       return (
       <div>
-  
         <span>Id del partido: {data.id}</span>
         <br/>
         <span>Lugar: {data.lugar}</span>
@@ -102,14 +99,14 @@ function PartidoComponent() {
         <br/>
         <span>Usuarios: </span>
         <ul>
-        {data.usuarios && Object.keys(data.usuarios).map(function(key) {
-          const usuario = data.usuarios[key];
-          return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
-        })}
-      </ul>
+          {data.usuarios && Object.keys(data.usuarios).map(function(key) {
+            const usuario = data.usuarios[key];
+            return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
+          })}
+        </ul>
         
       </div>
-  
+
       );
     }
 
