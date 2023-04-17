@@ -48,7 +48,7 @@ function PartidoComponent() {
         const user = data.usuarios[userId];
         // si el id de usuario en la db coincide con el valor de la cookie
         if (cookie && user.user_id === cookie.value) {
-          console.log(user.color);
+          console.log('Tu nombre es: ' + user.username);
           if (user.is_admin) {
             console.log('es admin: ' + user.is_admin);
           }
@@ -89,6 +89,14 @@ function PartidoComponent() {
         
       </div>
   
+      );
+    }
+    else{
+      
+      return (
+        <div>
+          <span>La Id no se encontró</span>
+        </div>
       );
     }
 
