@@ -6,14 +6,14 @@ import { useParams } from 'react-router-dom';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set, get } from "firebase/database";
+import { getDatabase, ref, onValue, get } from "firebase/database";
 import "firebase/auth";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-function getCookies() {
-  const { id } = useParams();
+function getCookies(id_partido) {
+  const id  = id_partido;
   const cookies = document.cookie.split(';').map(cookie => cookie.trim());
   for (let i = 0; i < cookies.length; i++) {
     if (cookies[i].includes(id)) {
@@ -26,45 +26,66 @@ function getCookies() {
 
 
 function PartidoComponent() {
-
-    // obtener :id desde la url
-    const { id } = useParams();
-    const dbRef = ref(database, "partido/" + id); 
-    const [data, setData] = useState("");
-    const cookie = getCookies();
-    console.log(cookie);
+  
+  // obtener :id desde la url
+  const { id } = useParams();
+  const dbRef = ref(database, "partido/" + id); 
+  const [data, setData] = useState("");
+  let hasUserCookies = false;
+  const cookie = getCookies(id);
 
     useEffect(() => {
-  
       onValue(dbRef, (snapshot) => {
-        setData(snapshot.val());
-        console.log(snapshot.val());
+        if (snapshot.exists()) {
+          setData(snapshot.val());
+        }
       });
     }, []);
+    
 
     // obtener datos del usuario a partir de la cookie
     function get_user(){
-      for (const userId in data.usuarios) {
-        const user = data.usuarios[userId];
-        // si el id de usuario en la db coincide con el valor de la cookie
-        if (cookie && user.user_id === cookie.value) {
-          console.log('Tu nombre es: ' + user.username);
-          if (user.is_admin) {
-            console.log('es admin: ' + user.is_admin);
-          }
+      // verificar si existe el partidocn esa ID
+      get(ref(database, `partido/${id}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          const data_get = snapshot.val();
+
+          // por cada usuario en la data, chekear si coincide la cookie.value con el id del usuario
+          for (const userId in data_get.usuarios) {
+            const user = data_get.usuarios[userId];
+            // buscar si el id de usuario en la db coincide con el valor de la cookie
+            if (cookie && user.user_id === cookie.value) {
+              console.log('El usuario posee cookies guardadas con username: ' + user.username);
+                if (user.is_admin) {
+                    console.log('es admin: ' + user.is_admin);
+                }
+                hasUserCookies = true;   
+                return;
+            }
+            else{
+                hasUserCookies = false;
+            }
         }
-        // si no coincide el valor de la cookie
-        else{
-          console.log('el usuario no existe, mostrar input de ingrese su nombre..');
+        if (!hasUserCookies) {
+          console.log(data_get);
+          console.log('no tienes cookies... modal-box ingrese su nombre');
+          return 'no_cookies';
         }
-      }
-      return false;
+
+        }
+        else {
+          console.log('No existe el partido, ID incorrecta');
+
+        }
+
+      }).catch((error) => {
+        console.log('Error al obtener los datos del partido: ', error);
+      });
     }
 
     // si existe data con el id de la url
-    if (data != null){
-
-      get_user();
+    if (data !== null && data !== ""){
+      const user_data = get_user();
 
       return (
       <div>
@@ -83,7 +104,7 @@ function PartidoComponent() {
         <ul>
         {data.usuarios && Object.keys(data.usuarios).map(function(key) {
           const usuario = data.usuarios[key];
-          return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id}</li>;
+          return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
         })}
       </ul>
         
@@ -91,11 +112,12 @@ function PartidoComponent() {
   
       );
     }
+
     else{
       
       return (
         <div>
-          <span>La Id no se encontró</span>
+          
         </div>
       );
     }

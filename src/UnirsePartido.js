@@ -72,7 +72,6 @@ const unirsePartido = (event) => {
                             "user_id": user_id,
                             "username": event.target[1].value,
                             "color": "red",
-                            "is_admin": true,
                             "positionX": 0,
                             "positionY": 0
                             }
