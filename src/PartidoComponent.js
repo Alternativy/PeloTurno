@@ -13,16 +13,22 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 function getCookies(id_partido) {
-  const id  = id_partido;
-  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-  for (let i = 0; i < cookies.length; i++) {
-    if (cookies[i].includes(id)) {
-      const [name, value] = cookies[i].split('=');
-      return { name, value };
+    const id  = id_partido;
+    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+    for (let i = 0; i < cookies.length; i++) {
+        if (cookies[i].includes(id)) {
+          const [name, value] = cookies[i].split('=');
+          return { name, value };
+        }
     }
-  }
-  return null;
+    return null;
 }
+
+
+///// CAMBIOS /////
+// En este componente PartidoComp, se checkea si la /id: existe y si el usuario posee cookies correctas, si no posee cookies se le muestra un <div/> para que ingrese su nombre  
+
+
 
 
 function PartidoComponent() {

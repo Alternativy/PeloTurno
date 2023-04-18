@@ -16,13 +16,16 @@ function getCookies(id_partido) {
     const id  = id_partido;
     const cookies = document.cookie.split(';').map(cookie => cookie.trim());
     for (let i = 0; i < cookies.length; i++) {
-      if (cookies[i].includes(id)) {
-        const [name, value] = cookies[i].split('=');
-        return { name, value };
-      }
+        if (cookies[i].includes(id)) {
+            const [name, value] = cookies[i].split('=');
+            return { name, value };
+        }
     }
     return null;
-  }
+}
+
+///// CAMBIOS /////
+// En este componente UnirsePArtido, solo se le pide el id del partido y se verifica si este id existe, si es asi se lo envia al PartidoComp  
 
 
 // la idea de unirse a partido, es: 
