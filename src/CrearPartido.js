@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get } from "firebase/database";
-import "firebase/auth";
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
