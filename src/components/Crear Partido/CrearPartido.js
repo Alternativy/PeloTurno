@@ -63,7 +63,7 @@ function CrearPartido() {
 
         <form className='formulario m-auto text-center' onSubmit={writeToDatabase}>
         
-        <label className='h4 text-start' htmlFor='username'>Tu nombre:</label>
+        <label className='h4 text-start text-light' htmlFor='username'>Tu nombre:</label>
         <br/>
         <input type='text' id='username' placeholder='Escribir aquí' name='username' className='form-control-lg mb-3'/>
 

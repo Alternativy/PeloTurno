@@ -1,59 +1,37 @@
 h1 {
-	background-color: #1c703d;
 	color: white;
 	margin: 0px;
 	padding-left: 30px;
-
 }
 
 header{
 	z-index: 999;
 	position: absolute;
 	width: 100%;
+	background-color: rgba(40, 135, 0, 0.873);
+	border-bottom: 4px solid rgb(215, 215, 215);
 }
 
 /* Establecer la imagen de fondo para el elemento body */
 .background{
-	background-image: url(./assets/img/banfiellld.jpeg);
+	background-image: url(./assets/img/staduim-bck.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
 	display: flex;
 	justify-content: center;
-	min-height: 1200px;
+	min-height: 700px;
 	height: 100vh;
-
 }
-
-/* Aplicar un filtro de desenfoque y un filtro de brillo a la imagen de fondo */
-/* .background::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: inherit;
-	filter: blur(2px) brightness(0.8);
-	-webkit-filter: blur(2px);
-	z-index: -1;
-  } */
-  
-  /*
-  main{
-	  background-color: rgba(255, 238, 0, 0.6);
-	backdrop-filter: blur(6px);
-	padding: 2%;
-	box-shadow: solid 0px 0px 12px;
-}
-*/
 
 
 .container{
-	background-color: rgba(255, 238, 0, 0.6);
+	background-color: rgba(40, 135, 0, 0.88);
 	max-width: 550px !important;
-	max-height: 1000px; 
-	margin-top: 150px;
+	max-height: 560px; 
+	margin-top: 130px;
+	border: 4px solid rgb(215, 215, 215);
+	border-radius: 4%;
 }
 
 .form-check-input[type=checkbox] {

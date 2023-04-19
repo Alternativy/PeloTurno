@@ -14,7 +14,13 @@ function App() {
         <Router>
         		<Routes>
 					<Route path="/" element={
-						<div className='container rounded p-5' style={{backgroundColor: 'rgba(25,25,25,0.2)'}}>
+							  
+						<div className="background">
+						<header>
+						<h1 className='p-3 m-0'> PeloTurno
+						</h1>
+					</header>
+						<div className='container p-5 p-relative '>
 							<CrearPartido/>
 							<br/>
 							<br/>
@@ -22,6 +28,7 @@ function App() {
 							<br/>
 							<br/>
 							<UnirsePartido/>
+						</div>
 						</div>
 					} />
 

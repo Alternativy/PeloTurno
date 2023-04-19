@@ -3,7 +3,7 @@ import firebaseConfig from '../../store/Firebase/firebaseConfig';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get, update } from "firebase/database";
+import { getDatabase, ref, get } from "firebase/database";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -37,7 +37,7 @@ function UnirsePartido(){
 
             <form className='formulario m-auto  text-center' onSubmit={unirsePartido}>
             
-            <label className='h4 text-start' htmlFor='id_partido'>Id partido:</label>
+            <label className='h4 text-start text-light' htmlFor='id_partido'>Id partido:</label>
             <br/>
             <input type='text' id='id_partido' placeholder='Escribir aquí' name='id_partido' className='form-control-lg mb-3 '/>
 
