@@ -1,5 +1,5 @@
 import React from "react";
-import firebaseConfig from './firebaseConfig';
+import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { uid } from 'uid';
 import Cookies from 'js-cookie';
 

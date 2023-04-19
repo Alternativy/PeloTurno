@@ -14,7 +14,7 @@ header{
 
 /* Establecer la imagen de fondo para el elemento body */
 .background{
-	background-image: url(banfiellld.jpeg);
+	background-image: url(./assets/img/banfiellld.jpeg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;

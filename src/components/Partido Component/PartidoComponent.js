@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import './App.css';
-import firebaseConfig from './firebaseConfig';
+
+import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { useParams } from 'react-router-dom';
 import { uid } from 'uid';
 import Cookies from 'js-cookie';

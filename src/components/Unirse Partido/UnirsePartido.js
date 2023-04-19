@@ -1,5 +1,5 @@
 import React from "react";
-import firebaseConfig from './firebaseConfig';
+import firebaseConfig from '../../store/Firebase/firebaseConfig';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";

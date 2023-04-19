@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
-import CrearPartido from './CrearPartido';
-import PartidoComponent from './PartidoComponent';
-import UnirsePartido from './UnirsePartido';
+import CrearPartido from './components/Crear Partido/CrearPartido';
+import PartidoComponent from './components/Partido Component/PartidoComponent';
+import UnirsePartido from './components/Unirse Partido/UnirsePartido';
 
 
 function App() {
