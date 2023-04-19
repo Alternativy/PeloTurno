@@ -10,7 +10,8 @@ import { getDatabase, ref, set, get } from "firebase/database";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-
+const url_local = "http://localhost:3000/";
+const url_prod =  'https://peloturno-e8bc6.web.app/';
 
 const writeToDatabase = (event) => {
     event.preventDefault();
@@ -19,7 +20,7 @@ const writeToDatabase = (event) => {
     const user_id = uid(8);
     set(ref(database, `partido/${id}`), {
         id : id,
-        url: "http://localhost:3000/" + id,
+        url: url_prod + id,
         lugar: "mi lugar",
         fecha: "una fecha",
         hora: "una hora",
@@ -65,7 +66,7 @@ function CrearPartido() {
         
         <label className='h4 text-start text-light' htmlFor='username'>Tu nombre:</label>
         <br/>
-        <input type='text' id='username' placeholder='Escribir aquí' name='username' className='form-control-lg mb-3'/>
+        <input type='text' id='username' placeholder='Escribir aquí' name='username' className='form-control-lg mb-3' required/>
 
         <div className='mt-3 text-center'>
             <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'> Crear un Partido</button>

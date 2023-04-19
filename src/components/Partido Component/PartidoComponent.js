@@ -71,7 +71,7 @@ function PartidoComponent() {
         }
         else {
           console.log('No existe el partido, ID incorrecta');
-          window.location.replace('http://localhost:3000');
+          window.location.replace('/');
         }
 
       }).catch((error) => {
@@ -159,7 +159,7 @@ const unirsePartido = (event) => {
         return (
           <div>
             <form onSubmit={unirsePartido}>
-              <input type="text" placeholder="Nombre de usuario" />
+              <input type="text" placeholder="Nombre de usuario" required/>
               <button type="submit">Unirse al partido</button>
             </form>
           </div>
