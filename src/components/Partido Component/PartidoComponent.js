@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import '../../App.css';
 
 import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { useParams } from 'react-router-dom';
@@ -133,24 +134,33 @@ const unirsePartido = (event) => {
 
       if (hasUserCookies === true){
         return (
-        <div>
-          <span>Id del partido: {data.id}</span>
-          <br/>
-          <span>Lugar: {data.lugar}</span>
-          <br/>
-          <span>Hora: {data.hora}</span>
-          <br/>
-          <span>Fecha: {data.fecha}</span>
-          <br/>
-          <span>Precio: {data.precio}</span>
-          <br/>
-          <span>Usuarios: </span>
-          <ul>
-            {data.usuarios && Object.keys(data.usuarios).map(function(key) {
-              const usuario = data.usuarios[key];
-              return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
-            })}
-          </ul>
+        <div className='justify-content-center align-items-center m-auto container px-3'>
+
+          <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
+            <span><b>Link:</b> <a className='text-white' href={data.url}>{data.url}</a> </span>
+          </div>
+
+          <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
+            <span><b>Lugar: </b>{data.lugar}</span>
+            <br/>
+            <span><b>Hora:</b> {data.hora}</span>
+            <br/>
+            <span><b>Fecha:</b> {data.fecha}</span>
+            <br/>
+            <span><b>Precio:</b> {data.precio}</span>
+            <br/>
+          </div>
+
+          <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
+            <span> <b>Usuarios: </b></span>
+            <ul>
+              {data.usuarios && Object.keys(data.usuarios).map(function(key) {
+                const usuario = data.usuarios[key];
+                return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
+              })}
+            </ul>
+          </div>
+
         </div>
   
         );

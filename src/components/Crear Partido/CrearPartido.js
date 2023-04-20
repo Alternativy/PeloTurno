@@ -20,7 +20,7 @@ const writeToDatabase = (event) => {
     const user_id = uid(8);
     set(ref(database, `partido/${id}`), {
         id : id,
-        url: url_prod + id,
+        url: url_local + id,
         lugar: "mi lugar",
         fecha: "una fecha",
         hora: "una hora",
@@ -64,13 +64,13 @@ function CrearPartido() {
 
         <form className='formulario m-auto text-center' onSubmit={writeToDatabase}>
         
-        <label className='h4 text-start text-light' htmlFor='username'>Tu nombre:</label>
-        <br/>
-        <input type='text' id='username' placeholder='Escribir aquí' name='username' className='form-control-lg mb-3' required/>
+            <label className='h4 text-light' htmlFor='username'>Tu nombre:</label>
+            <br/>
+            <input className='form-control-lg mb-3' type='text' id='username' placeholder='Escribir aquí' name='username'  required/>
 
-        <div className='mt-3 text-center'>
-            <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'> Crear un Partido</button>
-        </div>
+            <div className='mt-3 pb-3 text-center'>
+                <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'> Crear un Partido</button>
+            </div>
 
         </form>
 
