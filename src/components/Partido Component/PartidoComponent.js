@@ -13,7 +13,7 @@ import { getDatabase, ref, onValue, get, update } from "firebase/database";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-let data_get;
+let user_data;
 
 function getCookies(id_partido) {
     const id  = id_partido;
@@ -50,13 +50,15 @@ function PartidoComponent() {
       // verificar si existe el partidocn esa ID
       get(ref(database, `partido/${id}`)).then((snapshot) => {
         if (snapshot.exists()) {
-          data_get = snapshot.val();
+          const data = snapshot.val();
 
           // por cada usuario en la data, chekear si coincide la cookie.value con el id del usuario
-          for (const userId in data_get.usuarios) {
-            const user = data_get.usuarios[userId];
+          for (const userId in data.usuarios) {
+            const user = data.usuarios[userId];
             // buscar si el id de usuario en la db coincide con el valor de la cookie
             if (cookie && user.user_id === cookie.value) {
+              user_data = user;
+              console.log(user);
               console.log('El usuario posee cookies guardadas con username: ' + user.username);
               setHasUserCookies(true); 
               console.log(hasUserCookies);
@@ -132,11 +134,12 @@ const unirsePartido = (event) => {
   const mensajeChat = (event) => {
     event.preventDefault();
     const cookie = getCookies(id);
-    const msg_id = uid(8);
+    const msg_id = uid(6);
     update(ref(database, `partido/${id}/chat`), {
       [msg_id]:{
-        "user_id": cookie.value,
-        "sender_username" : cookie.value,
+        "message_id": msg_id,
+        "user_id": user_data.user_id,
+        "sender_username" : user_data.username,
         "text": event.target[0].value
       }
     }).then(() => {
@@ -144,7 +147,7 @@ const unirsePartido = (event) => {
       const partidoRef = ref(database, `partido/${id}`);
       get(partidoRef).then((snapshot) => {
           const partido = snapshot.val();
-          console.log('Partido creado correctamente: ', partido);
+          console.log('Partido actualizado correctamente: ', partido);
       }).catch((error) => {
           console.error('Error al obtener los datos del partido: ', error);
       });
@@ -194,22 +197,20 @@ const unirsePartido = (event) => {
                 <ul>
                   {data.chat && Object.keys(data.chat).map(function(key) {
                     const mensaje = data.chat[key];
-                    return <li key={mensaje.user_id}>{mensaje.user_id} :  {mensaje.text}</li>;
+                    return <li key={mensaje.message_id}>{mensaje.sender_username} :  {mensaje.text}</li>;
                   })}
                 </ul>
                 </div>
 
                 <span> 
                 <form onSubmit={mensajeChat}>
-                <input className='' type="text" placeholder="Escribe tu mensaje" />
+                <input className='' type="text" placeholder="Escribe tu mensaje" required/>
                   <button type='submit' className='btn btn-primary btn-lg'>Enviar</button>
                 </form>
                 </span>
               </div>
 
-
           </div>
-  
         );
       }
       else if (hasUserCookies === false){
