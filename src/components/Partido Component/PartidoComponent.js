@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../../App.css';
 
 import firebaseConfig from '../../store/Firebase/firebaseConfig';
@@ -16,15 +16,15 @@ const database = getDatabase(app);
 let user_data;
 
 function getCookies(id_partido) {
-    const id  = id_partido;
-    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-    for (let i = 0; i < cookies.length; i++) {
-        if (cookies[i].includes(id)) {
-          const [name, value] = cookies[i].split('=');
-          return { name, value };
-        }
+  const id  = id_partido;
+  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+  for (let i = 0; i < cookies.length; i++) {
+    if (cookies[i].includes(id)) {
+      const [name, value] = cookies[i].split('=');
+      return { name, value };
     }
-    return null;
+  }
+  return null;
 }
 
 
@@ -41,7 +41,9 @@ function PartidoComponent() {
   const dbRef = ref(database, "partido/" + id); 
   const [data, setData] = useState("");
   const [hasUserCookies, setHasUserCookies] = useState(null);
-  
+  const messagesRef = useRef(null);
+
+
   useEffect(() => {
     
     const cookie = getCookies(id);
@@ -135,12 +137,17 @@ const unirsePartido = (event) => {
     event.preventDefault();
     const cookie = getCookies(id);
     const msg_id = uid(6);
+    const input_txt = event.target[0].value;
+    const timestamp = new Date().getTime();
+    // Accede al elemento de entrada de texto y restablece su valor a una cadena vacía
+    event.target[0].value = '';
     update(ref(database, `partido/${id}/chat`), {
       [msg_id]:{
         "message_id": msg_id,
         "user_id": user_data.user_id,
         "sender_username" : user_data.username,
-        "text": event.target[0].value
+        "text": input_txt,
+        "timestamp": timestamp
       }
     }).then(() => {
       console.log('Los datos se han actualizado correctamente');
@@ -151,6 +158,12 @@ const unirsePartido = (event) => {
       }).catch((error) => {
           console.error('Error al obtener los datos del partido: ', error);
       });
+
+    // Actualiza la propiedad scrollTop para mantener el scroll abajo cada vez que se actualiza la lista de mensajes
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+
     }).catch((error) => {
       console.error('Error al escribir los datos: ', error);
     });
@@ -185,7 +198,7 @@ const unirsePartido = (event) => {
                 <ul>
                   {data.usuarios && Object.keys(data.usuarios).map(function(key) {
                     const usuario = data.usuarios[key];
-                    return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
+                    return <li key={usuario.user_id}>{usuario.username} - {usuario.is_admin ? 'admin' : 'user'} </li>;
                   })}
                 </ul>
               </div>
@@ -193,14 +206,18 @@ const unirsePartido = (event) => {
               <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
                 <span><b>Chat </b></span>
 
-                <div className='border p-4 me-4'>
-                <ul>
-                  {data.chat && Object.keys(data.chat).map(function(key) {
-                    const mensaje = data.chat[key];
-                    return <li key={mensaje.message_id}>{mensaje.sender_username} :  {mensaje.text}</li>;
-                  })}
-                </ul>
-                </div>
+                <div className='border p-4 me-4 overflow-auto'>
+  <ul ref={messagesRef} className='overflow-auto' style={{height: '280px'}}> 
+    {data.chat && Object.values(data.chat)
+      .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
+      .map((mensaje) => (
+        <div key={mensaje.message_id}>
+          <b>{mensaje.sender_username}: </b> {mensaje.text}
+        </div>
+      ))
+    }
+  </ul>
+</div>
 
                 <span> 
                 <form onSubmit={mensajeChat}>
