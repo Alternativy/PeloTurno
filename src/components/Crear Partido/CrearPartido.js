@@ -66,7 +66,7 @@ function CrearPartido() {
         
             <label className='h4 text-light' htmlFor='username'>Tu nombre:</label>
             <br/>
-            <input className='form-control-lg mb-3' type='text' id='username' placeholder='Escribir aquí' name='username'  required/>
+            <input className='form-control-lg mb-3' type='text' id='username' placeholder='Escribir aquí' name='username' required/>
 
             <div className='mt-3 pb-3 text-center'>
                 <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'> Crear un Partido</button>

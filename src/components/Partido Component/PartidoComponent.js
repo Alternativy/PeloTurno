@@ -13,6 +13,7 @@ import { getDatabase, ref, onValue, get, update } from "firebase/database";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+let data_get;
 
 function getCookies(id_partido) {
     const id  = id_partido;
@@ -49,7 +50,7 @@ function PartidoComponent() {
       // verificar si existe el partidocn esa ID
       get(ref(database, `partido/${id}`)).then((snapshot) => {
         if (snapshot.exists()) {
-          const data_get = snapshot.val();
+          data_get = snapshot.val();
 
           // por cada usuario en la data, chekear si coincide la cookie.value con el id del usuario
           for (const userId in data_get.usuarios) {
@@ -116,7 +117,7 @@ const unirsePartido = (event) => {
             const partido = snapshot.val();
             console.log('Partido creado correctamente: ', partido);
             // crear cookie con id del  partido y usuario
-            Cookies.set(id, user_id, { expires: 60 });
+            Cookies.set(id, user_id, { expires: 90 });
             // redirigir al PartidoComponent
             window.location.replace(partido.url);
         }).catch((error) => {
@@ -128,40 +129,86 @@ const unirsePartido = (event) => {
   }
 
 
+  const mensajeChat = (event) => {
+    event.preventDefault();
+    const cookie = getCookies(id);
+    const msg_id = uid(8);
+    update(ref(database, `partido/${id}/chat`), {
+      [msg_id]:{
+        "user_id": cookie.value,
+        "sender_username" : cookie.value,
+        "text": event.target[0].value
+      }
+    }).then(() => {
+      console.log('Los datos se han actualizado correctamente');
+      const partidoRef = ref(database, `partido/${id}`);
+      get(partidoRef).then((snapshot) => {
+          const partido = snapshot.val();
+          console.log('Partido creado correctamente: ', partido);
+      }).catch((error) => {
+          console.error('Error al obtener los datos del partido: ', error);
+      });
+    }).catch((error) => {
+      console.error('Error al escribir los datos: ', error);
+    });
+  }
+
+
 
     // si existe data con el id de la url
     if (data !== null && data !== ""){
 
       if (hasUserCookies === true){
         return (
-        <div className='justify-content-center align-items-center m-auto container px-3'>
+          <div className='container-fluid'>
 
-          <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
-            <span><b>Link:</b> <a className='text-white' href={data.url}>{data.url}</a> </span>
+              <div className='sub-container mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
+                <span><b>Link:</b> <a className='text-white' href={data.url}>{data.url}</a> </span>
+              </div>
+
+              <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
+                <span><b>Lugar: </b>{data.lugar}</span>
+                <br/>
+                <span><b>Hora:</b> {data.hora}</span>
+                <br/>
+                <span><b>Fecha:</b> {data.fecha}</span>
+                <br/>
+                <span><b>Precio:</b> {data.precio}</span>
+                <br/>
+              </div>
+
+              <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
+                <span> <b>Usuarios: </b></span>
+                <ul>
+                  {data.usuarios && Object.keys(data.usuarios).map(function(key) {
+                    const usuario = data.usuarios[key];
+                    return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
+                  })}
+                </ul>
+              </div>
+
+              <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
+                <span><b>Chat </b></span>
+
+                <div className='border p-4 me-4'>
+                <ul>
+                  {data.chat && Object.keys(data.chat).map(function(key) {
+                    const mensaje = data.chat[key];
+                    return <li key={mensaje.user_id}>{mensaje.user_id} :  {mensaje.text}</li>;
+                  })}
+                </ul>
+                </div>
+
+                <span> 
+                <form onSubmit={mensajeChat}>
+                <input className='' type="text" placeholder="Escribe tu mensaje" />
+                  <button type='submit' className='btn btn-primary btn-lg'>Enviar</button>
+                </form>
+                </span>
+              </div>
+
+
           </div>
-
-          <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
-            <span><b>Lugar: </b>{data.lugar}</span>
-            <br/>
-            <span><b>Hora:</b> {data.hora}</span>
-            <br/>
-            <span><b>Fecha:</b> {data.fecha}</span>
-            <br/>
-            <span><b>Precio:</b> {data.precio}</span>
-            <br/>
-          </div>
-
-          <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
-            <span> <b>Usuarios: </b></span>
-            <ul>
-              {data.usuarios && Object.keys(data.usuarios).map(function(key) {
-                const usuario = data.usuarios[key];
-                return <li key={usuario.user_id}>{usuario.username} - {usuario.user_id} - {usuario.is_admin ? 'admin' : 'user'} </li>;
-              })}
-            </ul>
-          </div>
-
-        </div>
   
         );
       }
