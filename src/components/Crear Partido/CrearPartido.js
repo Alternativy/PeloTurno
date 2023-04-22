@@ -20,7 +20,7 @@ const writeToDatabase = (event) => {
     const user_id = uid(8);
     set(ref(database, `partido/${id}`), {
         id : id,
-        url: url_local + id,
+        url: url_prod + id,
         lugar: "mi lugar",
         fecha: "una fecha",
         hora: "una hora",
