@@ -15,7 +15,7 @@ const url_prod =  'https://peloturno-e8bc6.web.app/';
 
 const writeToDatabase = (event) => {
     event.preventDefault();
-    
+    const timestamp = new Date().getTime();
     const id = uid(8);
     const user_id = uid(8);
     set(ref(database, `partido/${id}`), {
@@ -35,6 +35,7 @@ const writeToDatabase = (event) => {
               "username": event.target[0].value,
               "color": "red",
               "is_admin": true,
+              "order": timestamp,
               "positionX": 0,
               "positionY": 0
             }

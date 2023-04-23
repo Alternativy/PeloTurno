@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import '../../App.css';
+import { coloresCSS } from '../../store/colors';
 
 import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { useParams } from 'react-router-dom';
@@ -14,11 +15,7 @@ import { getDatabase, ref, onValue, get, update } from "firebase/database";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
-const colors = ['darkgoldenrod', 'steelblue', 'teal', 'hotpink',
-'magenta', 'aquamarine', 'chartreuse', 'lime', 'firebrick', 'dodgerblue',
-'darkkhaki', 'salmon', 'orchid', 'cyan', 'forestgreen', 'navy',
-'sienna', 'indigo', 'tomato', 'khaki', 'orange', 'lavender',
-'bisque', 'olive', 'maroon', 'purple', 'coral', 'peru', 'gold']
+
 let user_data;
 
 function getCookies(id_partido) {
@@ -111,14 +108,15 @@ const unirsePartido = (event) => {
         const users_get = snapshot.val().usuarios;
         const partido_url = snapshot.val().url;
         const numUsuarios = Object.keys(users_get).length;
-
+        const timestamp = new Date().getTime();
         if (numUsuarios < 30) {
           const user_id = uid(8);
           update(ref(database, `partido/${id}/usuarios`), {
                   [user_id]: {
                   "user_id": user_id,
                   "username": event.target[0].value,
-                  "color": "red",
+                  "color": coloresCSS[numUsuarios-1],
+                  "order": timestamp,
                   "positionX": 0,
                   "positionY": 0
                   }
@@ -154,6 +152,7 @@ const unirsePartido = (event) => {
         "message_id": msg_id,
         "user_id": user_data.user_id,
         "sender_username" : user_data.username,
+        "color":  user_data.color,
         "text": input_txt,
         "timestamp": timestamp
       }
@@ -201,26 +200,30 @@ const unirsePartido = (event) => {
                 <span><b>Precio:</b> {data.precio}</span>
                 <br/>
               </div>
-              <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
-                <span> <b>Usuarios ({numUsuarios}): </b></span>
+              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+                <span> <b>Jugadores ({numUsuarios}): </b></span>
                 <ul>
-                  {data.usuarios && Object.keys(data.usuarios).map(function(key) {
-                    const usuario = data.usuarios[key];
-                    return <li key={usuario.user_id}>{usuario.username} - {usuario.is_admin ? 'admin' : 'user'} </li>;
-                  })}
+                    {data.usuarios && Object.values(data.usuarios)
+                      .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                      .map((usuario) => (
+                        <div key={usuario.user_id}>
+                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'} </li>
+                        </div>
+                      ))
+                    }
                 </ul>
               </div>
 
-              <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
-                <span><b>Chat </b></span>
+              <div className='sub-container mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
+                <span className='text-white'><b>Chat </b></span>
 
-                <div className='border p-4 me-4 overflow-auto'>
-                  <ul ref={messagesRef} className='overflow-auto' style={{height: '280px', maxWidth: '450px', overflow: 'auto', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
+                <div className='border rounded me-5 overflow-auto bg-white mb-3'>
+                  <ul ref={messagesRef} className='overflow-auto' style={{height: '270px', maxWidth: '450px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
                     {data.chat && Object.values(data.chat)
                       .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
                       .map((mensaje) => (
                         <div key={mensaje.message_id}>
-                          <b>{mensaje.sender_username}: </b> {mensaje.text}
+                          <b style={{color: mensaje.color}}>{mensaje.sender_username}: </b> {mensaje.text}
                         </div>
                       ))
                     }
