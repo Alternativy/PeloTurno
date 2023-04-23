@@ -10,9 +10,15 @@ import Cookies from 'js-cookie';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, get, update } from "firebase/database";
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const colors = ['darkgoldenrod', 'steelblue', 'teal', 'hotpink',
+'magenta', 'aquamarine', 'chartreuse', 'lime', 'firebrick', 'dodgerblue',
+'darkkhaki', 'salmon', 'orchid', 'cyan', 'forestgreen', 'navy',
+'sienna', 'indigo', 'tomato', 'khaki', 'orange', 'lavender',
+'bisque', 'olive', 'maroon', 'purple', 'coral', 'peru', 'gold']
 let user_data;
 
 function getCookies(id_partido) {
@@ -26,11 +32,6 @@ function getCookies(id_partido) {
   }
   return null;
 }
-
-
-///// CAMBIOS /////
-// En este componente PartidoComp, se checkea si la /id: existe y si el usuario posee cookies correctas, si no posee cookies se le muestra un <div/> para que ingrese su nombre  
-
 
 
 
@@ -71,7 +72,7 @@ function PartidoComponent() {
             }
             else{
               setHasUserCookies(false); 
-              console.log('No existe el usuario');
+              console.log('No existe el usuario en las cookies');
             }
           }
         }
@@ -103,33 +104,40 @@ function PartidoComponent() {
 
 
 const unirsePartido = (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-    const user_id = uid(8);
-    update(ref(database, `partido/${id}/usuarios`), {
-            [user_id]: {
-            "user_id": user_id,
-            "username": event.target[0].value,
-            "color": "red",
-            "positionX": 0,
-            "positionY": 0
-            }
-    }).then(() => {
-        console.log('Los datos se han actualizado correctamente');
-        const partidoRef = ref(database, `partido/${id}`);
-        get(partidoRef).then((snapshot) => {
-            const partido = snapshot.val();
-            console.log('Partido creado correctamente: ', partido);
-            // crear cookie con id del  partido y usuario
-            Cookies.set(id, user_id, { expires: 90 });
-            // redirigir al PartidoComponent
-            window.location.replace(partido.url);
-        }).catch((error) => {
-            console.error('Error al obtener los datos del partido: ', error);
-        });
+    get(ref(database, `partido/${id}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        const users_get = snapshot.val().usuarios;
+        const partido_url = snapshot.val().url;
+        const numUsuarios = Object.keys(users_get).length;
+
+        if (numUsuarios < 30) {
+          const user_id = uid(8);
+          update(ref(database, `partido/${id}/usuarios`), {
+                  [user_id]: {
+                  "user_id": user_id,
+                  "username": event.target[0].value,
+                  "color": "red",
+                  "positionX": 0,
+                  "positionY": 0
+                  }
+          }).then(() => {
+              console.log('Los datos se han actualizado correctamente');
+              // crear cookie con id del  partido y usuario
+              Cookies.set(id, user_id, { expires: 90 });
+              // redirigir al PartidoComponent
+              window.location.replace(partido_url);
+          });
+        }
+        else {
+          alert('El partido está lleno');
+        }
+      }
     }).catch((error) => {
-        console.error('Error al escribir los datos: ', error);
-      });
+      console.error('Error al obtener los datos del partido: ', error);
+    });
+
   }
 
 
@@ -175,6 +183,7 @@ const unirsePartido = (event) => {
     if (data !== null && data !== ""){
 
       if (hasUserCookies === true){
+        const numUsuarios = Object.keys(data.usuarios).length;
         return (
           <div className='container-fluid'>
 
@@ -192,9 +201,8 @@ const unirsePartido = (event) => {
                 <span><b>Precio:</b> {data.precio}</span>
                 <br/>
               </div>
-
               <div className='sub-container text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
-                <span> <b>Usuarios: </b></span>
+                <span> <b>Usuarios ({numUsuarios}): </b></span>
                 <ul>
                   {data.usuarios && Object.keys(data.usuarios).map(function(key) {
                     const usuario = data.usuarios[key];
@@ -207,17 +215,17 @@ const unirsePartido = (event) => {
                 <span><b>Chat </b></span>
 
                 <div className='border p-4 me-4 overflow-auto'>
-  <ul ref={messagesRef} className='overflow-auto' style={{height: '280px'}}> 
-    {data.chat && Object.values(data.chat)
-      .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
-      .map((mensaje) => (
-        <div key={mensaje.message_id}>
-          <b>{mensaje.sender_username}: </b> {mensaje.text}
-        </div>
-      ))
-    }
-  </ul>
-</div>
+                  <ul ref={messagesRef} className='overflow-auto' style={{height: '280px', maxWidth: '450px', overflow: 'auto', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
+                    {data.chat && Object.values(data.chat)
+                      .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
+                      .map((mensaje) => (
+                        <div key={mensaje.message_id}>
+                          <b>{mensaje.sender_username}: </b> {mensaje.text}
+                        </div>
+                      ))
+                    }
+                  </ul>
+                </div>
 
                 <span> 
                 <form onSubmit={mensajeChat}>
@@ -232,10 +240,10 @@ const unirsePartido = (event) => {
       }
       else if (hasUserCookies === false){
         return (
-          <div>
+          <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
             <form onSubmit={unirsePartido}>
               <input type="text" placeholder="Nombre de usuario" required/>
-              <button type="submit">Unirse al partido</button>
+              <button className='btn btn-primary btn-lg' type="submit">Unirse al partido</button>
             </form>
           </div>
         );
