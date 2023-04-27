@@ -139,9 +139,15 @@ const unirsePartido = (event) => {
   }
 
 
+  // copiar link al portapapeles
+  const copiarLink = (event) => {
+    event.preventDefault();
+    navigator.clipboard.writeText(event.target.id);
+  }
+
+
   const mensajeChat = (event) => {
     event.preventDefault();
-    const cookie = getCookies(id);
     const msg_id = uid(6);
     const input_txt = event.target[0].value;
     const timestamp = new Date().getTime();
@@ -170,11 +176,11 @@ const unirsePartido = (event) => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
-
-    }).catch((error) => {
-      console.error('Error al escribir los datos: ', error);
-    });
-  }
+    
+  }).catch((error) => {
+    console.error('Error al escribir los datos: ', error);
+  });
+}
 
 
 
@@ -184,10 +190,15 @@ const unirsePartido = (event) => {
       if (hasUserCookies === true){
         const numUsuarios = Object.keys(data.usuarios).length;
         return (
+
           <div className='container-fluid'>
 
-              <div className='sub-container mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg'>
-                <span><b>Link:</b> <a className='text-white' href={data.url}>{data.url}</a> </span>
+              <div className='sub-container rounded-top mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'>
+                <span>
+                &nbsp;<b>ID:</b> &nbsp;
+                  <a className='text-warning'>{data.id}</a> &nbsp;
+                  <button id={data.url} onClick={copiarLink} className='btn border border-1 border-dark btn-warning btn-sm'>Copiar</button>
+                </span>
               </div>
 
               <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
@@ -200,7 +211,7 @@ const unirsePartido = (event) => {
                 <span><b>Precio:</b> {data.precio}</span>
                 <br/>
               </div>
-              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <span> <b>Jugadores ({numUsuarios}): </b></span>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
@@ -214,7 +225,8 @@ const unirsePartido = (event) => {
                 </ul>
               </div>
 
-              <div className='sub-container mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
+{/* 
+              <div className='sub-container rounded mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
                 <span className='text-white'><b>Chat </b></span>
 
                 <div className='border rounded me-5 overflow-auto bg-white mb-3'>
@@ -235,10 +247,14 @@ const unirsePartido = (event) => {
                 <input className='' type="text" placeholder="Escribe tu mensaje" required/>
                   <button type='submit' className='btn btn-primary btn-lg'>Enviar</button>
                 </form>
+                
                 </span>
               </div>
 
+*/}
+
           </div>
+
         );
       }
       else if (hasUserCookies === false){

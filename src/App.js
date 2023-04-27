@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Link, Routes} from 'react-router-dom';
 import CrearPartido from './components/Crear Partido/CrearPartido';
 import PartidoComponent from './components/Partido Component/PartidoComponent';
 import UnirsePartido from './components/Unirse Partido/UnirsePartido';
-
+import TableroDinamico from './components/Tablero Dinamico/TableroDinamico';
 
 function App() {
 
@@ -33,6 +33,7 @@ function App() {
 					} />
 
 					<Route path="/:id" element={<PartidoComponent/>} />
+					<Route path="/tablero" element={<TableroDinamico/>} />
 
         		</Routes>
     	  </Router>
