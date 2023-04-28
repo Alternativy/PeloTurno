@@ -193,24 +193,49 @@ const unirsePartido = (event) => {
 
           <div className='container-fluid'>
 
-              <div className='sub-container rounded-top mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'>
-                <span>
-                &nbsp;<b>ID:</b> &nbsp;
-                  <a className='text-warning'>{data.id}</a> &nbsp;
-                  <button id={data.url} onClick={copiarLink} className='btn border border-1 border-dark btn-warning btn-sm'>Copiar</button>
-                </span>
+            <div className='sub-container rounded-top mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'>
+              <span>
+                <b>ID:</b> &nbsp;
+                <a className='text-warning'>{data.id}</a> &nbsp;
+                <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning btn-sm'>Copiar</button>
+              </span>
+            </div>
+
+            <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
+
+                <div className="row align-items-center mt-2">
+                    <div className="col-3 fw-bold form-labels" >Fecha:</div>
+                    <div className="col-6">
+                      <input readOnly type="date" value={data.fecha} name="fecha" className="form-control fs-5 p-1" autoComplete='off' required />
+                    </div>
+                </div>
+
+                <div className="row align-items-center mt-2">
+                    <div className="col-3 fw-bold form-labels" >Hora:</div>
+                    <div className="col-6">
+                      <input readOnly type="time" value={data.hora} name="hora" className="form-control fs-5 p-1" autoComplete="off" required />
+                    </div>
+                </div>
+
+                <div className="row align-items-center mt-2">
+                    <div className="col-3 fw-bold form-labels" >Lugar:</div>
+                    <div className="col-6">
+                      <input readOnly type="text" value={data.lugar} name='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required />
+                    </div>
+                </div>
+
+                <div className="row align-items-center mt-2">
+                    <div className="col-3 fw-bold form-labels" >Alquilado:</div>
+                    <div className="col-6">
+                     &nbsp; <input readOnly type="checkbox" checked={data.alquilado} name="alquilado" autoComplete="off" required />
+                    </div>
+                </div>
+
+
+
               </div>
 
-              <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
-                <span><b>Lugar: </b>{data.lugar}</span>
-                <br/>
-                <span><b>Hora:</b> {data.hora}</span>
-                <br/>
-                <span><b>Fecha:</b> {data.fecha}</span>
-                <br/>
-                <span><b>Precio:</b> {data.precio}</span>
-                <br/>
-              </div>
+
               <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <span> <b>Jugadores ({numUsuarios}): </b></span>
                 <ul>

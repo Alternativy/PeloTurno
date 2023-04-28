@@ -22,13 +22,12 @@ const writeToDatabase = (event) => {
         id : id,
         url: url_local + id,
         lugar: "mi lugar",
-        fecha: "una fecha",
-        hora: "una hora",
-        cantidadJugadores: "",
+        fecha: "2023-04-28",
+        hora: "18:00",
         precio: "1500",
         equipo1: "",
         equipo2: "",
-        alquilado: false,
+        alquilado: true,
         usuarios: {
             [user_id]: {
               "user_id": user_id,

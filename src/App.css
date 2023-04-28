@@ -42,6 +42,10 @@ header{
 	margin: auto;
 }
 
+.form-labels{
+	min-width: 110px;
+}
+
 .form-check-input[type=checkbox] {
 	width: 2em;
 	height: 2em;
