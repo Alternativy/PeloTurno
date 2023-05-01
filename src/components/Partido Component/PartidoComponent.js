@@ -117,6 +117,7 @@ const unirsePartido = (event) => {
                   "username": event.target[0].value,
                   "color": coloresCSS[numUsuarios-1],
                   "order": timestamp,
+                  "equipo": 0,
                   "positionX": 0,
                   "positionY": 0
                   }
@@ -143,6 +144,23 @@ const unirsePartido = (event) => {
   const copiarLink = (event) => {
     event.preventDefault();
     navigator.clipboard.writeText(event.target.id);
+  }
+
+  const cambiarEquipo = (event) => {
+    event.preventDefault();
+    const value = event.target.id;
+    const user_id = event.target.name;
+    console.log(user_id);
+    console.log(value);
+
+    update(ref(database, `partido/${id}/usuarios/${user_id}`), {
+      "equipo": value,
+    }).then(() => {
+      console.log('Los datos se han actualizado correctamente');
+    }).catch((error) => {
+      console.error('Error al escribir los datos: ', error);
+    });
+  
   }
 
 
@@ -209,21 +227,24 @@ const unirsePartido = (event) => {
                       <input readOnly type="date" value={data.fecha} name="fecha" className="form-control fs-5 p-1" autoComplete='off' required />
                     </div>
                 </div>
-
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Hora:</div>
                     <div className="col-6">
                       <input readOnly type="time" value={data.hora} name="hora" className="form-control fs-5 p-1" autoComplete="off" required />
                     </div>
                 </div>
-
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Lugar:</div>
                     <div className="col-6">
                       <input readOnly type="text" value={data.lugar} name='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required />
                     </div>
                 </div>
-
+                <div className="row align-items-center mt-2">
+                    <div className="col-3 fw-bold form-labels" >Precio:</div>
+                    <div className="col-6">
+                      <input readOnly type="number" value={data.precio} name='precio' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required />
+                    </div>
+                </div>
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Alquilado:</div>
                     <div className="col-6">
@@ -238,8 +259,34 @@ const unirsePartido = (event) => {
 
               <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='text-center justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
+                <div className=''>
+
+                    {data.usuarios && Object.values(data.usuarios)
+                      .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                      .map((usuario) => (
+                        <div className='row me-2' key={usuario.user_id}>
+
+                          <div className='col-7 border-bottom' key={usuario.user_id} style={{color: usuario.color}}>
+                          ⚽ <b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'}
+                          </div>
+
+                          <div className='col-5 text-end'>
+                            <button name={usuario.user_id} id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-4 px-3 py-0'>1</button>
+                              &nbsp;&nbsp;
+                            <button name={usuario.user_id} id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-4 px-3 py-0'>2</button>
+                          </div>
+
+                        </div>
+                      ))
+                    }
+                </div>
+              </div>
+
+              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+                <div className='fw-bold'>Equipo 1:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
+                      .filter(usuario => usuario.equipo === "1") // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
                         <div key={usuario.user_id}>
@@ -251,23 +298,10 @@ const unirsePartido = (event) => {
               </div>
 
               <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-                <div className='fw-bold'>Equipo 1:</div>
-                <ul>
-                    {data.usuarios && Object.values(data.usuarios)
-                      .sort((a, b) => a.order - b.order) // ordenar por timestamp
-                      .map((usuario) => (
-                        <div className='border border-2 rounded me-4' key={usuario.user_id}>
-                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'} </li>
-                        </div>
-                      ))
-                    }
-                </ul>
-              </div>
-
-              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='fw-bold'>Equipo 2:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
+                      .filter(usuario => usuario.equipo === "2") // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
                         <div key={usuario.user_id}>
@@ -323,7 +357,7 @@ const unirsePartido = (event) => {
       
     }
     else{
-      return (<div>Cargando...</div>);
+      return (<div className='m-2 h5'>Cargando...</div>);
     }
 
 }

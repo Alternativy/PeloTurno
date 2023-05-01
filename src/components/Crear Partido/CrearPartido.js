@@ -25,8 +25,6 @@ const writeToDatabase = (event) => {
         fecha: "2023-04-28",
         hora: "18:00",
         precio: "1500",
-        equipo1: "",
-        equipo2: "",
         alquilado: true,
         usuarios: {
             [user_id]: {
@@ -35,6 +33,7 @@ const writeToDatabase = (event) => {
               "color": "red",
               "is_admin": true,
               "order": timestamp,
+              "equipo": 0,
               "positionX": 0,
               "positionY": 0
             }
