@@ -197,7 +197,7 @@ const unirsePartido = (event) => {
               <span>
                 <b>ID:</b> &nbsp;
                 <a className='text-warning'>{data.id}</a> &nbsp;
-                <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning btn-sm'>Copiar</button>
+                <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
               </span>
             </div>
 
@@ -237,7 +237,35 @@ const unirsePartido = (event) => {
 
 
               <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-                <span> <b>Jugadores ({numUsuarios}): </b></span>
+                <div className='text-center justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
+                <ul>
+                    {data.usuarios && Object.values(data.usuarios)
+                      .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                      .map((usuario) => (
+                        <div key={usuario.user_id}>
+                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'} </li>
+                        </div>
+                      ))
+                    }
+                </ul>
+              </div>
+
+              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+                <div className='fw-bold'>Equipo 1:</div>
+                <ul>
+                    {data.usuarios && Object.values(data.usuarios)
+                      .sort((a, b) => a.order - b.order) // ordenar por timestamp
+                      .map((usuario) => (
+                        <div className='border border-2 rounded me-4' key={usuario.user_id}>
+                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'} </li>
+                        </div>
+                      ))
+                    }
+                </ul>
+              </div>
+
+              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+                <div className='fw-bold'>Equipo 2:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
