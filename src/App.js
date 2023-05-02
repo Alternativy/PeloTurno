@@ -17,7 +17,7 @@ function App() {
 							  
 						<div className="background">
 						<header>
-						<h1 className='p-3 m-0'> PeloTurno
+						<h1 className='p-3 m-0'>⚽ PeloTurno
 						</h1>
 					</header>
 						<div className='container p-5 p-relative '>

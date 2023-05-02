@@ -216,13 +216,22 @@ const unirsePartido = (event) => {
 
           <div className='container-fluid'>
 
-            <div className='sub-container mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
+
+            <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
               style={{borderRadius:"20px 20px 0px 0px"}}>
+                						<h1 className='p-2 m-0'>⚽ PeloTurno
+						</h1>
+            {
+              /* 
               <span>
                 <b>ID:</b> &nbsp;
                 <a className='text-light'>{data.id}</a> &nbsp;
                 <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
               </span>
+              
+              */
+            }
+
             </div>
 
             <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
@@ -326,7 +335,7 @@ const unirsePartido = (event) => {
 
               </div>
 
-{ 
+
               <div className='sub-container rounded mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
                 <span className='text-white'><b>Chat </b></span>
 
@@ -352,7 +361,7 @@ const unirsePartido = (event) => {
                 </span>
               </div>
 
-}
+
 
           </div>
 
