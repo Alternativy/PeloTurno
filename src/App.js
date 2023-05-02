@@ -33,7 +33,7 @@ function App() {
 					} />
 
 					<Route path="/:id" element={<PartidoComponent/>} />
-					<Route path="/tablero" element={<TableroDinamico/>} />
+
 
         		</Routes>
     	  </Router>

@@ -40,7 +40,12 @@ function PartidoComponent() {
   const [data, setData] = useState("");
   const [hasUserCookies, setHasUserCookies] = useState(null);
   const messagesRef = useRef(null);
-
+  // Configuración de la solicitud con la clave secreta
+  const config = {
+    queryParams: {
+      clave_secreta: 'asd'
+    }
+  };
 
   useEffect(() => {
     
@@ -148,14 +153,14 @@ const unirsePartido = (event) => {
 
   const cambiarEquipo = (event) => {
     event.preventDefault();
-    const value = event.target.id;
+    const value = Number(event.target.id);
     const user_id = event.target.name;
     console.log(user_id);
     console.log(value);
 
     update(ref(database, `partido/${id}/usuarios/${user_id}`), {
       "equipo": value,
-    }).then(() => {
+    }, config).then(() => {
       console.log('Los datos se han actualizado correctamente');
     }).catch((error) => {
       console.error('Error al escribir los datos: ', error);
@@ -286,11 +291,11 @@ const unirsePartido = (event) => {
                 <div className='fw-bold'>Equipo 1:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
-                      .filter(usuario => usuario.equipo === "1") // filtrar por equipo 1
+                      .filter(usuario => usuario.equipo === 1) // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
                         <div key={usuario.user_id}>
-                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'} </li>
+                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> </li>
                         </div>
                       ))
                     }
@@ -301,18 +306,18 @@ const unirsePartido = (event) => {
                 <div className='fw-bold'>Equipo 2:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
-                      .filter(usuario => usuario.equipo === "2") // filtrar por equipo 1
+                      .filter(usuario => usuario.equipo === 2) // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
                         <div key={usuario.user_id}>
-                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'} </li>
+                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b></li>
                         </div>
                       ))
                     }
                 </ul>
               </div>
 
-{/* 
+{ 
               <div className='sub-container rounded mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
                 <span className='text-white'><b>Chat </b></span>
 
@@ -338,7 +343,7 @@ const unirsePartido = (event) => {
                 </span>
               </div>
 
-*/}
+}
 
           </div>
 

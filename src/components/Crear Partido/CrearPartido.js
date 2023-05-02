@@ -24,13 +24,13 @@ const writeToDatabase = (event) => {
         lugar: "mi lugar",
         fecha: "2023-04-28",
         hora: "18:00",
-        precio: "1500",
+        precio: 1500,
         alquilado: true,
         usuarios: {
             [user_id]: {
               "user_id": user_id,
               "username": event.target[0].value,
-              "color": "red",
+              "color": "#FF0000",
               "is_admin": true,
               "order": timestamp,
               "equipo": 0,
@@ -52,7 +52,7 @@ const writeToDatabase = (event) => {
             console.error('Error al obtener los datos del partido: ', error);
         });
     }).catch((error) => {
-        console.error('Error al escribir los datos: ', error);
+        console.error('Error al escribir los datos: ', error.message);
     });
 };
 
