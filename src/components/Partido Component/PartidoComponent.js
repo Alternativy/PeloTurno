@@ -216,10 +216,11 @@ const unirsePartido = (event) => {
 
           <div className='container-fluid'>
 
-            <div className='sub-container rounded-top mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'>
+            <div className='sub-container mt-5 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
+              style={{borderRadius:"20px 20px 0px 0px"}}>
               <span>
                 <b>ID:</b> &nbsp;
-                <a className='text-warning'>{data.id}</a> &nbsp;
+                <a className='text-light'>{data.id}</a> &nbsp;
                 <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
               </span>
             </div>
@@ -287,7 +288,7 @@ const unirsePartido = (event) => {
                 </div>
               </div>
 
-              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='fw-bold'>Equipo 1:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
@@ -302,7 +303,7 @@ const unirsePartido = (event) => {
                 </ul>
               </div>
 
-              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='fw-bold'>Equipo 2:</div>
                 <ul>
                     {data.usuarios && Object.values(data.usuarios)
@@ -315,6 +316,14 @@ const unirsePartido = (event) => {
                       ))
                     }
                 </ul>
+              </div>
+
+              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
+              style={{borderRadius:"0px 0px 20px 20px", backgroundColor: "rgb(240, 240, 240)"}}>
+                <div className='text-center justify-content-center align-items-center'>
+                  <button className='btn btn-secondary btn-lg'>Mezclar</button>
+                </div>
+
               </div>
 
 { 
