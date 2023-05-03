@@ -263,14 +263,16 @@ const unirsePartido = (event) => {
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Precio:</div>
                     <div className="col-6">
-                      <input type="number" value={data.precio} name='precio' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required 
-                      onChange={(e) => setFormData({ ...formData, precio: e.target.value })} />
+                      <input type="number" value={data.precio} name='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required 
+                      onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Alquilado:</div>
                     <div className="col-6">
-                     <input readOnly type="checkbox" className="form-check-input fs-6 ms-0 ps-0" checked={data.alquilado} name="alquilado" autoComplete="off" required />
+                     <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0" checked={data.alquilado} name="alquilado" autoComplete="off" required
+                     onChange={(e) => setFormData({ ...formData, alquilado: e.target.checked })} />
+
                     </div>
                 </div>
 

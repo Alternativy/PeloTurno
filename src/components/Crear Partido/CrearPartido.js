@@ -21,11 +21,11 @@ const writeToDatabase = (event) => {
     set(ref(database, `partido/${id}`), {
         id : id,
         url: url_local + id,
-        lugar: "mi lugar",
-        fecha: "2023-04-28",
-        hora: "18:00",
-        precio: 1500,
-        alquilado: true,
+        lugar: "",
+        fecha: "",
+        hora: "",
+        precio: null,
+        alquilado: false,
         usuarios: {
             [user_id]: {
               "user_id": user_id,
