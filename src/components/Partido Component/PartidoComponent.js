@@ -36,16 +36,13 @@ function PartidoComponent() {
   
   // obtener :id desde la url
   const { id } = useParams();
-  const dbRef = ref(database, "partido/" + id); 
+  const dbRef = ref(database, `partido/${id}`); 
   const [data, setData] = useState("");
   const [hasUserCookies, setHasUserCookies] = useState(null);
+  const [formData, setFormData] = useState({});
   const messagesRef = useRef(null);
   // Configuración de la solicitud con la clave secreta
-  const config = {
-    queryParams: {
-      clave_secreta: 'asd'
-    }
-  };
+
 
   useEffect(() => {
     
@@ -53,7 +50,7 @@ function PartidoComponent() {
     // obtener datos del usuario a partir de la cookie
     function get_user(){
       // verificar si existe el partidocn esa ID
-      get(ref(database, `partido/${id}`)).then((snapshot) => {
+      get(dbRef).then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
 
@@ -100,15 +97,21 @@ function PartidoComponent() {
       }
     });
 
+   
+
   }, [id]);
 
-
+  useEffect(() => {
+    // Referencia a la ubicación en la base de datos donde se encuentra el registro a modificar
+    // Realizar el update con los nuevos valores del formulario
+    update(dbRef, formData);
+  }, [formData]);
 
 
 const unirsePartido = (event) => {
     event.preventDefault();
 
-    get(ref(database, `partido/${id}`)).then((snapshot) => {
+    get(dbRef).then((snapshot) => {
       if (snapshot.exists()) {
         const users_get = snapshot.val().usuarios;
         const partido_url = snapshot.val().url;
@@ -155,12 +158,10 @@ const unirsePartido = (event) => {
     event.preventDefault();
     const value = Number(event.target.id);
     const user_id = event.target.name;
-    console.log(user_id);
-    console.log(value);
 
     update(ref(database, `partido/${id}/usuarios/${user_id}`), {
       "equipo": value,
-    }, config).then(() => {
+    }, ).then(() => {
       console.log('Los datos se han actualizado correctamente');
     }).catch((error) => {
       console.error('Error al escribir los datos: ', error);
@@ -219,54 +220,61 @@ const unirsePartido = (event) => {
 
             <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
               style={{borderRadius:"20px 20px 0px 0px"}}>
-                						<h1 className='p-2 m-0'>⚽ PeloTurno
-						</h1>
             {
-              /* 
+            //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
+            }
               <span>
                 <b>ID:</b> &nbsp;
                 <a className='text-light'>{data.id}</a> &nbsp;
                 <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
               </span>
               
-              */
-            }
+              
+            
 
             </div>
 
             <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
 
+            <form>
+
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Fecha:</div>
                     <div className="col-6">
-                      <input readOnly type="date" value={data.fecha} name="fecha" className="form-control fs-5 p-1" autoComplete='off' required />
+                      <input type="date" value={data.fecha} name="fecha"
+                       className="form-control fs-5 p-1" autoComplete='off' required
+                       onChange={(e) => setFormData({ ...formData, fecha: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Hora:</div>
                     <div className="col-6">
-                      <input readOnly type="time" value={data.hora} name="hora" className="form-control fs-5 p-1" autoComplete="off" required />
+                      <input  type="time" value={data.hora} name="hora" className="form-control fs-5 p-1" autoComplete="off" required
+                      onChange={(e) => setFormData({ ...formData, hora: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Lugar:</div>
                     <div className="col-6">
-                      <input readOnly type="text" value={data.lugar} name='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required />
+                      <input type="text" value={data.lugar} name='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
+                      onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Precio:</div>
                     <div className="col-6">
-                      <input readOnly type="number" value={data.precio} name='precio' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required />
+                      <input type="number" value={data.precio} name='precio' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required 
+                      onChange={(e) => setFormData({ ...formData, precio: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
                     <div className="col-3 fw-bold form-labels" >Alquilado:</div>
                     <div className="col-6">
-                     &nbsp; <input readOnly type="checkbox" checked={data.alquilado} name="alquilado" autoComplete="off" required />
+                     <input readOnly type="checkbox" className="form-check-input fs-6 ms-0 ps-0" checked={data.alquilado} name="alquilado" autoComplete="off" required />
                     </div>
                 </div>
 
+            </form>
 
 
               </div>
@@ -282,14 +290,17 @@ const unirsePartido = (event) => {
                         <div className='row me-2' key={usuario.user_id}>
 
                           <div className='col-7 border-bottom' key={usuario.user_id} style={{color: usuario.color}}>
-                          ⚽ <b>{usuario.username}</b> - {usuario.is_admin ? 'admin' : 'user'}
+                          <b>{usuario.username}</b> - {usuario.is_admin ? '⚽' : ''} 
                           </div>
 
+                          { user_data.is_admin ?
                           <div className='col-5 text-end'>
                             <button name={usuario.user_id} id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-4 px-3 py-0'>1</button>
                               &nbsp;&nbsp;
                             <button name={usuario.user_id} id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-4 px-3 py-0'>2</button>
-                          </div>
+                          </div> :
+                            null
+                          }
 
                         </div>
                       ))
