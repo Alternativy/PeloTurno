@@ -7,10 +7,12 @@ import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { useParams } from 'react-router-dom';
 import { uid } from 'uid';
 import Cookies from 'js-cookie';
+import NavBar from '../Nav bar/NavBar';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, get, update } from "firebase/database";
+import { hover } from '@testing-library/user-event/dist/hover';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -166,9 +168,21 @@ const unirsePartido = (event) => {
     }).catch((error) => {
       console.error('Error al escribir los datos: ', error);
     });
-  
   }
 
+  const darAdmin = (event) => {
+    event.preventDefault();
+    const value = true;
+    const user_id = event.target.name;
+
+    update(ref(database, `partido/${id}/usuarios/${user_id}`), {
+      "is_admin": value,
+    }, ).then(() => {
+      console.log('Los datos se han actualizado correctamente');
+    }).catch((error) => {
+      console.error('Error al escribir los datos: ', error);
+    });
+  }
 
   const mensajeChat = (event) => {
     event.preventDefault();
@@ -215,10 +229,11 @@ const unirsePartido = (event) => {
         const numUsuarios = Object.keys(data.usuarios).length;
         return (
 
-          <div className='container-fluid'>
+        <div>
 
+            <NavBar/>
 
-            <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
+          <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
               style={{borderRadius:"20px 20px 0px 0px"}}>
             {
             //<h1 className='p-2 m-0'>⚽ PeloTurno</h1>
@@ -228,61 +243,53 @@ const unirsePartido = (event) => {
                 <a className='text-light'>{data.id}</a> &nbsp;
                 <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
               </span>
-              
-              
-            
+                   
+          </div>
 
-            </div>
-
-            <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
+          <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
 
             <form>
-
                 <div className="row align-items-center mt-2">
-                    <div className="col-3 fw-bold form-labels" >Fecha:</div>
+                    <label className="col-4 fw-bold form-labels" htmlFor="fecha">Fecha:</label>
                     <div className="col-6">
-                      <input type="date" value={data.fecha} name="fecha"
+                      <input type="date" value={data.fecha} id="fecha"
                        className="form-control fs-5 p-1" autoComplete='off' required
                        onChange={(e) => setFormData({ ...formData, fecha: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <div className="col-3 fw-bold form-labels" >Hora:</div>
+                    <label className="col-4 fw-bold form-labels" >Hora:</label>
                     <div className="col-6">
-                      <input  type="time" value={data.hora} name="hora" className="form-control fs-5 p-1" autoComplete="off" required
+                      <input  type="time" value={data.hora} id="hora" className="form-control fs-5 p-1" autoComplete="off" required
                       onChange={(e) => setFormData({ ...formData, hora: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <div className="col-3 fw-bold form-labels" >Lugar:</div>
+                    <label className="col-4 fw-bold form-labels" >Lugar:</label>
                     <div className="col-6">
-                      <input type="text" value={data.lugar} name='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
+                      <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
                       onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <div className="col-3 fw-bold form-labels" >Precio:</div>
+                    <label className="col-4 fw-bold form-labels" htmlFor="precio" >Precio:</label>
                     <div className="col-6">
-                      <input type="number" value={data.precio} name='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required 
+                      <input type="number" value={data.precio} id='precio' name='precio' placeholder='$' className="form-control fs-5 p-1" autoComplete="off" required 
                       onChange={(e) => setFormData({ ...formData, precio: Number(e.target.value) })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <div className="col-3 fw-bold form-labels" >Alquilado:</div>
-                    <div className="col-6">
-                     <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0" checked={data.alquilado} name="alquilado" autoComplete="off" required
+                    <label className="col-4 fw-bold form-labels" >Alquilado:</label>
+                    <div className="col-6 ">
+                     <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0 border border-dark " style={{ cursor: 'pointer' }} checked={data.alquilado} id="alquilado" autoComplete="off" required
                      onChange={(e) => setFormData({ ...formData, alquilado: e.target.checked })} />
-
                     </div>
                 </div>
-
             </form>
 
+          </div>
 
-              </div>
-
-
-              <div className='sub-container rounded-bottom pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
+              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='text-center justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
                 <div className=''>
 
@@ -291,15 +298,17 @@ const unirsePartido = (event) => {
                       .map((usuario) => (
                         <div className='row me-2' key={usuario.user_id}>
 
-                          <div className='col-7 border-bottom' key={usuario.user_id} style={{color: usuario.color}}>
-                          <b>{usuario.username}</b> - {usuario.is_admin ? '⚽' : ''} 
+                          <div className='col-7 pb-3' key={usuario.user_id} style={{color: usuario.color}}>
+                          <b>{usuario.username}</b> <span role="img" aria-label='pelota'>- {usuario.is_admin ? '⚽' : ''} </span>
                           </div>
 
                           { user_data.is_admin ?
-                          <div className='col-5 text-end'>
-                            <button name={usuario.user_id} id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-4 px-3 py-0'>1</button>
+                          <div className='col-5 text-end pe-0'>
+                            <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>1</button>
                               &nbsp;&nbsp;
-                            <button name={usuario.user_id} id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-4 px-3 py-0'>2</button>
+                            <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>2</button>
+                              &nbsp;&nbsp;
+                            <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
                           </div> :
                             null
                           }
@@ -340,60 +349,80 @@ const unirsePartido = (event) => {
                 </ul>
               </div>
 
-              <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
+            <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
               style={{borderRadius:"0px 0px 20px 20px", backgroundColor: "rgb(240, 240, 240)"}}>
-                <div className='text-center justify-content-center align-items-center'>
+              <div className='text-center justify-content-center align-items-center'>
                   <button className='btn btn-secondary btn-lg'>Mezclar</button>
-                </div>
-
               </div>
+            </div>
 
 
-              <div className='sub-container rounded mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
-                <span className='text-white'><b>Chat </b></span>
+              <div className='sub-container mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
+               style={{borderRadius:"20px 20px 20px 20px"}}>
+                <span className='text-white'><b>Chat</b></span>
 
-                <div className='border rounded me-5 overflow-auto bg-white mb-3'>
-                  <ul ref={messagesRef} className='overflow-auto' style={{height: '270px', maxWidth: '450px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
+                <div className='border rounded me-4 overflow-auto bg-white mb-3'>
+                  <ul ref={messagesRef} className='overflow-auto' style={{height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
+                    <div className='text-black-50'>
+                      {data.chat ? '' : 'No hay mensajes...'} 
+                    </div>
+
                     {data.chat && Object.values(data.chat)
                       .sort((a, b) => a.timestamp - b.timestamp) // ordenar por timestamp
                       .map((mensaje) => (
                         <div key={mensaje.message_id}>
-                          <b style={{color: mensaje.color}}>{mensaje.sender_username}: </b> {mensaje.text}
+                          <b style={{color: mensaje.color}}>{mensaje.sender_username}: </b>
+                           {mensaje.text}
                         </div>
                       ))
                     }
                   </ul>
                 </div>
 
-                <span> 
+
                 <form onSubmit={mensajeChat}>
-                <input className='' type="text" placeholder="Escribe tu mensaje" required/>
-                  <button type='submit' className='btn btn-primary btn-lg'>Enviar</button>
+                  <div className='row me-4'>
+                    <div className='col'>
+                      <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required/>
+                    </div>
+                    <div className='col-4 justify-content-start align-items-center text-start'>
+                      <button type='submit' className='btn btn-primary btn-lg '> Enviar </button>
+                    </div>
+                  </div>
                 </form>
-                
-                </span>
+
               </div>
 
-
-
-          </div>
+        </div>
 
         );
       }
       else if (hasUserCookies === false){
         return (
-          <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'>
-            <form onSubmit={unirsePartido}>
-              <input type="text" placeholder="Nombre de usuario" required/>
-              <button className='btn btn-primary btn-lg' type="submit">Unirse al partido</button>
-            </form>
+          <div>
+            <NavBar/>
+
+            <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
+              style={{borderRadius:"20px 20px 20px 20px"}}>
+              <form onSubmit={unirsePartido}>
+                <div className='row me-4'>
+                      <div className='col'>
+                        <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Ingresa tu nombre" required/>
+                      </div>
+                      <div className='col-3 justify-content-center align-items-center'>
+                        <button className='btn btn-primary btn-lg' type="submit">Unirse</button>
+                      </div>
+                </div>
+              </form>
+            </div>
+
           </div>
         );
       }
       
     }
     else{
-      return (<div className='m-2 h5'>Cargando...</div>);
+      return (<div className='m-3 h5'>Cargando...</div>);
     }
 
 }

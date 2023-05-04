@@ -15,20 +15,21 @@ function App() {
         		<Routes>
 					<Route path="/" element={
 							  
-						<div className="background">
+					<div className="background">
 						<header>
-						<h1 className='p-3 m-0'>⚽ PeloTurno
-						</h1>
-					</header>
-						<div className='container p-5 p-relative '>
-							<CrearPartido/>
-							<br/>
-							<br/>
-							<div className='border border-2'></div>
-							<br/>
-							<br/>
-							<UnirsePartido/>
-						</div>
+							<h1 className='p-3 m-0'> 
+							<span role="img" aria-label='pelota' className='fst-italic'>⚽</span> PeloTurno <span className='fs-5 fst-italic'>beta</span>
+							</h1>
+						</header>
+							<div className='container p-5 p-relative '>
+								<CrearPartido/>
+								<br/>
+								<br/>
+								<div className='border border-2'></div>
+								<br/>
+								<br/>
+								<UnirsePartido/>
+							</div>
 						</div>
 					} />
 

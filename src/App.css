@@ -4,6 +4,12 @@ h1 {
 	padding-left: 30px;
 }
 
+nav{
+	width: 100%;
+	background-color: rgba(40, 135, 0, 1);
+	border-bottom: 4px solid rgb(215, 215, 215);
+}
+
 header{
 	z-index: 999;
 	position: absolute;
@@ -43,7 +49,7 @@ header{
 }
 
 .form-labels{
-	min-width: 110px;
+	max-width: 144px !important;
 }
 
 .form-check-input[type=checkbox] {
