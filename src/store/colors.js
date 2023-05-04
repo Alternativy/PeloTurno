@@ -3,10 +3,10 @@ export const coloresCSS = [
   "#FF5733", // Naranja intenso
   "#7D3C98", // Púrpura oscuro
   "#D4AC0D", // Amarillo oscuro
+  "#16A085", // Verde azulado intenso
   "#8E44AD", // Púrpura intenso
   "#FFC300", // Amarillo brillante
   "#C0392B", // Rojo oscuro
-  "#16A085", // Verde azulado intenso
   "#F39C12", // Naranja oscuro
   "#9B59B6", // Violeta brillante
   "#2ECC71", // Verde brillante

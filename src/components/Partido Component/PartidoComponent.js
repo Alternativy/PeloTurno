@@ -12,13 +12,13 @@ import NavBar from '../Nav bar/NavBar';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, get, update } from "firebase/database";
-import { hover } from '@testing-library/user-event/dist/hover';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 let user_data;
+let UserId ;
 
 function getCookies(id_partido) {
   const id  = id_partido;
@@ -62,10 +62,9 @@ function PartidoComponent() {
             // buscar si el id de usuario en la db coincide con el valor de la cookie
             if (cookie && user.user_id === cookie.value) {
               user_data = user;
-              console.log(user);
+              UserId = user.user_id;
               console.log('El usuario posee cookies guardadas con username: ' + user.username);
               setHasUserCookies(true); 
-              console.log(hasUserCookies);
               if (user.is_admin) {
                 console.log('es admin: ' + user.is_admin);
               }
@@ -248,6 +247,7 @@ const unirsePartido = (event) => {
 
           <div className='sub-container text-white pb-3 pt-3 ps-4 fs-4 lh-lg'>
 
+
             <form>
                 <div className="row align-items-center mt-2">
                     <label className="col-4 fw-bold form-labels" htmlFor="fecha">Fecha:</label>
@@ -289,20 +289,22 @@ const unirsePartido = (event) => {
 
           </div>
 
+
               <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='text-center justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
                 <div className=''>
 
                     {data.usuarios && Object.values(data.usuarios)
+                    .filter(usuario => usuario.equipo === 0) // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
                         <div className='row me-2' key={usuario.user_id}>
 
-                          <div className='col-7 pb-3' key={usuario.user_id} style={{color: usuario.color}}>
+                          <div className='col-7 pb-1' key={usuario.user_id} style={{color: usuario.color}}>
                           <b>{usuario.username}</b> <span role="img" aria-label='pelota'>- {usuario.is_admin ? '⚽' : ''} </span>
                           </div>
-
-                          { user_data.is_admin ?
+                          
+                          {data.usuarios[UserId].is_admin ? 
                           <div className='col-5 text-end pe-0'>
                             <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-2 py-0'>1</button>
                               &nbsp;&nbsp;
@@ -321,32 +323,55 @@ const unirsePartido = (event) => {
 
               <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='fw-bold'>Equipo 1:</div>
-                <ul>
+                <ol>
                     {data.usuarios && Object.values(data.usuarios)
                       .filter(usuario => usuario.equipo === 1) // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
-                        <div key={usuario.user_id}>
-                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> </li>
+                        <div className='row me-2' key={usuario.user_id}>
+                          <div className='col-7 pb-1'  key={usuario.user_id}>
+                            <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> <span role="img" aria-label='pelota'>{usuario.is_admin ? '⚽' : ''} </span> </li>
+                          </div>
+
+                          {data.usuarios[UserId].is_admin ? 
+                          <div className='col-5 text-end pe-0'>
+                            <button name={usuario.user_id} title='Equipo 2' id='2' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬇</button>
+                              &nbsp;&nbsp;
+                            <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                          </div> :
+                            null
+                          }
                         </div>
+ 
                       ))
                     }
-                </ul>
+                </ol>
               </div>
 
               <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
                 <div className='fw-bold'>Equipo 2:</div>
-                <ul>
+                <ol>
                     {data.usuarios && Object.values(data.usuarios)
                       .filter(usuario => usuario.equipo === 2) // filtrar por equipo 1
                       .sort((a, b) => a.order - b.order) // ordenar por timestamp
                       .map((usuario) => (
-                        <div key={usuario.user_id}>
-                          <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b></li>
+                        <div className='row me-2' key={usuario.user_id}>
+                          <div className='col-7 pb-1'  key={usuario.user_id}>
+                            <li key={usuario.user_id} style={{color: usuario.color}}><b>{usuario.username}</b> <span role="img" aria-label='pelota'> {usuario.is_admin ? '⚽' : ''} </span></li>
+                          </div>
+
+                          {data.usuarios[UserId].is_admin ? 
+                          <div className='col-5 text-end pe-0'>
+                            <button name={usuario.user_id} title='Equipo 1' id='1' onClick={cambiarEquipo} className='btn btn-light border border-dark border-2 fs-5 px-1 py-0'>⬆</button>
+                              &nbsp;&nbsp;
+                            <button name={usuario.user_id} title='Dar admin' id='2' onClick={darAdmin} className='btn btn-outline-info border border-dark border-2 fs-6 px-1 py-1'>⚽</button>
+                          </div> :
+                            null
+                          }
                         </div>
                       ))
                     }
-                </ul>
+                </ol>
               </div>
 
             <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
