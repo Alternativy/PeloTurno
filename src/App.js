@@ -18,7 +18,7 @@ function App() {
 					<div className="background">
 						<header>
 							<h1 className='p-3 m-0'> 
-							<span role="img" aria-label='pelota' className='fst-italic'>⚽</span> PeloTurno <span className='fs-5 fst-italic'>beta</span>
+							<span role="img" aria-label='pelota' className='fst-italic'>⚽</span> FulboLista <span className='fs-5 fst-italic'>beta</span>
 							</h1>
 						</header>
 							<div className='container p-5 p-relative '>
