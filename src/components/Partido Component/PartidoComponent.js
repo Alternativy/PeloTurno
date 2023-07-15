@@ -231,6 +231,7 @@ const unirsePartido = (event) => {
         <div>
 
             <NavBar/>
+          <div className='partido-bck'>
 
           <div className='sub-container mt-4 text-white pt-3 pb-3 ps-4 fs-4 lh-lg text-center justify-content-center align-items-center'
               style={{borderRadius:"20px 20px 0px 0px"}}>
@@ -418,6 +419,7 @@ const unirsePartido = (event) => {
 
               </div>
 
+          </div>
         </div>
 
         );

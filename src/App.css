@@ -10,12 +10,19 @@ nav{
 	border-bottom: 4px solid rgb(215, 215, 215);
 }
 
+.nav-link{
+	text-decoration: none;
+}
+
+.nav-link-title:hover{
+	border-bottom: 2px solid rgb(210, 210, 210);
+}
+
 header{
 	z-index: 999;
 	position: absolute;
 	width: 100%;
 	background-color: rgba(40, 135, 0, 0.873);
-	border-bottom: 4px solid rgb(215, 215, 215);
 }
 
 /* Establecer la imagen de fondo para el elemento body */
@@ -30,6 +37,15 @@ header{
 	height: 100vh;
 }
 
+/* Establecer la imagen de fondo para el elemento body */
+.partido-bck{
+	background-image: url(./assets/img/staduim-bck.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	display: flow-root;
+}
+
 
 .container{
 	background-color: rgba(40, 135, 0, 0.88);
@@ -41,12 +57,13 @@ header{
 }
 
 .sub-container{
-	background-color: rgba(40, 135, 0);
+	background-color: rgba(40, 135, 0, 0.88);
 	max-width: 550px !important;
 	max-height: auto; 
 	border: 4px solid rgb(215, 215, 215);
 	margin: auto;
 }
+
 
 .form-labels{
 	max-width: 144px !important;

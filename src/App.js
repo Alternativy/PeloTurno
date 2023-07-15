@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import CrearPartido from './components/Crear Partido/CrearPartido';
 import PartidoComponent from './components/Partido Component/PartidoComponent';
 import UnirsePartido from './components/Unirse Partido/UnirsePartido';
+import NavBar from './components/Nav bar/NavBar';
 //import TableroDinamico from './components/Tablero Dinamico/TableroDinamico';
 
 function App() {
@@ -17,9 +18,7 @@ function App() {
 							  
 					<div className="background">
 						<header>
-							<h1 className='p-3 m-0'> 
-							<span role="img" aria-label='pelota' className='fst-italic'>⚽</span> FulboLista <span className='fs-5 fst-italic'>beta</span>
-							</h1>
+							<NavBar/>
 						</header>
 							<div className='container p-5 p-relative '>
 								<CrearPartido/>
@@ -34,8 +33,6 @@ function App() {
 					} />
 
 					<Route path="/:id" element={<PartidoComponent/>} />
-
-
         		</Routes>
     	  </Router>
 
