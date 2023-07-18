@@ -2,6 +2,12 @@ import React from "react";
 import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { uid } from 'uid';
 import Cookies from 'js-cookie';
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPersonRunning} from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight} from '@fortawesome/free-solid-svg-icons'
+
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -58,20 +64,37 @@ const writeToDatabase = (event) => {
 
 
 function CrearPartido() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div className="CrearPartido">
 
-        <form className='formulario m-auto text-center' onSubmit={writeToDatabase}>
-        
-            <label className='h4 text-light' htmlFor='username'>Tu nombre:</label>
-            <br/>
-            <input className='form-control-lg mb-3' type='text' id='username' placeholder='Escribir aquí' name='username' required/>
+            <button className="btn border border-3 border-warning rounded-4 p-2 py-3 " onClick={handleShow}>
+                <h3 className="text-center text-light mb-2">Crear Partido  <FontAwesomeIcon className="text-light fs-3 ms-1 p-0" icon={faPersonRunning} />.</h3>
+                <p className="text-center text-light px-4 mx-1 pt-1">
+                Configura una sala personalizada para invitar a otros jugadores y formar equipos!
+                </p>
+            </button>
 
-            <div className='mt-3 pb-3 text-center'>
-                <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'> Crear un Partido</button>
-            </div>
 
-        </form>
+            <Modal show={show} onHide={handleClose} style={{marginTop: '150px'}}>
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title">
+                    <label htmlFor='username'>Ingresa tu nombre:</label>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={writeToDatabase}>
+                        <input className='form-control-lg my-2 w-100' type='text' id='username' placeholder='Escribir aquí' name='username' required/>
+                        <div className='mt-3 mb-2 text-center'>
+                            <button type='submit' className='btn btn-warning border border-3 border-dark btn-lg bold px-4'>Crear Partido <FontAwesomeIcon className="ms-1" style={{position:'relative', top:'1px'}}  icon={faAngleRight}/> </button>
+                        </div>
+                    </form>
+                </Modal.Body>
+            </Modal>
 
         </div>
     );
