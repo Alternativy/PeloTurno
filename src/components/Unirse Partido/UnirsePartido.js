@@ -54,7 +54,7 @@ function UnirsePartido(){
             <Modal show={show} onHide={handleClose} style={{marginTop: '150px'}}>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title">
-                    <label htmlFor='username'>Ingresa la ID:</label>
+                    <label htmlFor='username'>Ingresa el ID:</label>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
