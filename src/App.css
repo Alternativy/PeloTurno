@@ -50,7 +50,7 @@ header{
 .container{
 	background-color: rgba(40, 135, 0, 0.88);
 	max-width: 550px !important;
-	max-height: 560px; 
+	height: fit-content;
 	margin-top: 130px;
 	border: 4px solid rgb(215, 215, 215);
 	border-radius: 4%;
