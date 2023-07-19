@@ -2,6 +2,10 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import '../../App.css';
 import { coloresCSS } from '../../store/colors';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPeopleGroup} from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight} from '@fortawesome/free-solid-svg-icons'
+import { faShuffle} from '@fortawesome/free-solid-svg-icons'
 
 import firebaseConfig from '../../store/Firebase/firebaseConfig';
 import { useParams } from 'react-router-dom';
@@ -240,7 +244,7 @@ const unirsePartido = (event) => {
             }
               <span>
                 <b>ID:</b> &nbsp;
-                <a className='text-light'>{data.id}</a> &nbsp;
+                <span className='text-light text-decoration-underline'>{data.id}</span> &nbsp;
                 <button id={data.id} onClick={copiarLink} className='btn border border-1 border-dark btn-warning fs-6 btn-sm'>Copiar</button>
               </span>
                    
@@ -259,14 +263,14 @@ const unirsePartido = (event) => {
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <label className="col-4 fw-bold form-labels" >Hora:</label>
+                    <label className="col-4 fw-bold form-labels" htmlFor='hora'>Hora:</label>
                     <div className="col-6">
                       <input  type="time" value={data.hora} id="hora" className="form-control fs-5 p-1" autoComplete="off" required
                       onChange={(e) => setFormData({ ...formData, hora: e.target.value })} />
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <label className="col-4 fw-bold form-labels" >Lugar:</label>
+                    <label className="col-4 fw-bold form-labels" htmlFor='lugar'>Lugar:</label>
                     <div className="col-6">
                       <input type="text" value={data.lugar} id='lugar' placeholder='Escribir aqui' className="form-control fs-5 p-1" autoComplete="off" required
                       onChange={(e) => setFormData({ ...formData, lugar: e.target.value })} />
@@ -280,7 +284,7 @@ const unirsePartido = (event) => {
                     </div>
                 </div>
                 <div className="row align-items-center mt-2">
-                    <label className="col-4 fw-bold form-labels" >Alquilado:</label>
+                    <label className="col-4 fw-bold form-labels" htmlFor='alquilado' >Alquilado:</label>
                     <div className="col-6 ">
                      <input type="checkbox" className="form-check-input fs-6 ms-0 ps-0 border border-dark " style={{ cursor: 'pointer' }} checked={data.alquilado} id="alquilado" autoComplete="off" required
                      onChange={(e) => setFormData({ ...formData, alquilado: e.target.checked })} />
@@ -292,7 +296,7 @@ const unirsePartido = (event) => {
 
 
               <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg bg-white'>
-                <div className='text-center justify-content-center align-items-center fw-bold'>Jugadores: ({numUsuarios}) </div>
+                <div className='text-center justify-content-center align-items-center fw-bold'><FontAwesomeIcon className="ms-1" style={{position:'relative', top:'1px'}}  icon={faPeopleGroup}/> ({numUsuarios}) </div>
                 <div className=''>
 
                     {data.usuarios && Object.values(data.usuarios)
@@ -378,7 +382,7 @@ const unirsePartido = (event) => {
             <div className='sub-container pt-3 pb-3 ps-4 fs-4 lh-lg'
               style={{borderRadius:"0px 0px 20px 20px", backgroundColor: "rgb(240, 240, 240)"}}>
               <div className='text-center justify-content-center align-items-center'>
-                  <button className='btn btn-secondary btn-lg'>Mezclar</button>
+                  <button className='btn btn-secondary btn-lg'>Mezclar <FontAwesomeIcon className="ms-1" style={{position:'relative', top:'1px'}}  icon={faShuffle}/></button>
               </div>
             </div>
 
@@ -388,7 +392,7 @@ const unirsePartido = (event) => {
                 <span className='text-white'><b>Chat</b></span>
 
                 <div className='border rounded me-4 overflow-auto bg-white mb-3'>
-                  <ul ref={messagesRef} className='overflow-auto' style={{height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
+                  <ul ref={messagesRef} className='overflow-auto ps-3' style={{height: '300px', maxWidth: '494px', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}> 
                     <div className='text-black-50'>
                       {data.chat ? '' : 'No hay mensajes...'} 
                     </div>
@@ -411,8 +415,8 @@ const unirsePartido = (event) => {
                     <div className='col'>
                       <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Escribe tu mensaje" required/>
                     </div>
-                    <div className='col-4 justify-content-start align-items-center text-start'>
-                      <button type='submit' className='btn btn-primary btn-lg '> Enviar </button>
+                    <div className='col-4 justify-content-start align-items-center text-start p-0'>
+                      <button type='submit' className='btn btn-primary btn-lg '> Enviar <FontAwesomeIcon className="ms-1" style={{position:'relative', top:'2px'}}  icon={faAngleRight}/> </button>
                     </div>
                   </div>
                 </form>
@@ -428,21 +432,22 @@ const unirsePartido = (event) => {
         return (
           <div>
             <NavBar/>
-
+            <div className='background'>
             <div className='sub-container text-white mt-5 mb-3 pb-3 pt-3 ps-4 fs-4 lh-lg'
-              style={{borderRadius:"20px 20px 20px 20px"}}>
+              style={{borderRadius:"20px 20px 20px 20px", height:'fit-content'}}>
               <form onSubmit={unirsePartido}>
                 <div className='row me-4'>
-                      <div className='col'>
+                      <div className='col-8'>
                         <input className="form-control fs-5 p-1 py-2" type="text" placeholder="Ingresa tu nombre" required/>
                       </div>
-                      <div className='col-3 justify-content-center align-items-center'>
-                        <button className='btn btn-primary btn-lg' type="submit">Unirse</button>
+                      <div className='col justify-content-center align-items-center m-auto text-center p-0'>
+                        <button type='submit' className='btn btn-primary border border-3 border-dark bold px-3'>Unirse <FontAwesomeIcon className="ms-1" style={{position:'relative', top:'1px'}}  icon={faAngleRight}/> </button>
                       </div>
                 </div>
               </form>
             </div>
 
+                </div>
           </div>
         );
       }

@@ -14,9 +14,32 @@ nav{
 	text-decoration: none;
 }
 
-.nav-link-title:hover{
-	border-bottom: 2px solid rgb(210, 210, 210);
+.nav-link-title {
+    /* Estilos normales del enlace */
+    border-bottom: 2px solid transparent;
 }
+
+.nav-link-title:hover {
+    /* Iniciar la animación al hacer hover */
+    animation: borderAnimation 0.3s ease forwards;
+}
+
+@keyframes borderAnimation {
+    0% {
+        border-bottom: 2px solid transparent;
+        background-position: 50% 100%;
+    }
+    50% {
+        border-bottom: 2px solid rgb(210, 210, 210);
+        background-position: 100% 100%;
+		width: 50px;
+    }
+    100% {
+        border-bottom: 2px solid rgb(210, 210, 210);
+        background-position: 100% 100%;
+    }
+}
+
 
 header{
 	z-index: 999;
@@ -77,3 +100,13 @@ header{
 .formulario{
 	max-width: 300px;
 }
+
+.main-btn{
+	background-color: hsla(102, 100%, 24%, 0.88) !important;
+	transition: all .2s ease;
+}
+
+.main-btn:hover {
+    background-color: hsla(102, 100%, 28%, 0.88) !important;
+}
+

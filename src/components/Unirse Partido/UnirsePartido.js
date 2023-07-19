@@ -44,7 +44,7 @@ function UnirsePartido(){
     return(
         <div className="UnirsePartido">
 
-            <button className="btn border border-3 rounded-4 p-2 py-3" style={{border:'rgb(215, 215, 215)'}} onClick={handleShow}>
+            <button className="btn main-btn border border-3 rounded-4 p-2 py-3" style={{border:'rgb(215, 215, 215)'}} onClick={handleShow}>
                 <h3 className="text-center text-light mb-2">Unirse <FontAwesomeIcon className="text-light fs-3 ms-1 p-0" icon={faPeopleGroup} />.</h3>
                 <p className="text-center text-light px-4 mx-1 pt-1">
                  Únete a un partido existente utilizando el ID proporcionado por el organizador.

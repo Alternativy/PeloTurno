@@ -26,7 +26,7 @@ const writeToDatabase = (event) => {
     const user_id = uid(8);
     set(ref(database, `partido/${id}`), {
         id : id,
-        url: url_prod + id,
+        url: url_local + id,
         lugar: "",
         fecha: "",
         hora: "",
@@ -71,7 +71,7 @@ function CrearPartido() {
     return (
         <div className="CrearPartido">
 
-            <button className="btn border border-3 border-warning rounded-4 p-2 py-3 " onClick={handleShow}>
+            <button className="main-btn btn border border-3 border-warning rounded-4 p-2 py-3 " onClick={handleShow}>
                 <h3 className="text-center text-light mb-2">Crear Partido  <FontAwesomeIcon className="text-light fs-3 ms-1 p-0" icon={faPersonRunning} />.</h3>
                 <p className="text-center text-light px-4 mx-1 pt-1">
                 Configura una sala personalizada para invitar a otros jugadores y formar equipos!
